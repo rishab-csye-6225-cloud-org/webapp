@@ -1,5 +1,4 @@
 const config = require("../config/config.js");
-//require("dotenv").config();
 
 const Sequelize = require("sequelize");
 

@@ -31,6 +31,9 @@ const Auth = async (req, res, next) => {
     const user = await User.findOne({ 
         where: { username: email } 
     });
+
+    req.user = user;
+
     if (!user) {
         return res.status(401).json({
             message: 'Unauthorized access - Invalid username or password' 
