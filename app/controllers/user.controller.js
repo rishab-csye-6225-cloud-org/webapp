@@ -27,6 +27,57 @@ exports.create = async (request, response) => {
         //validation s
         
 
+        if("username" in request.body)
+        {   
+
+            if(request.body.username==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep username field empty!!' }, response, 400);
+    
+            }
+
+        }
+
+
+        if("first_name" in request.body)
+        {   
+
+            if(request.body.first_name==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep first_name field empty!!' }, response, 400);
+    
+            }
+
+        }
+
+        if("last_name" in request.body)
+        {   
+
+            if(request.body.last_name==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep last_name field empty!!' }, response, 400);
+    
+            }
+
+        }
+
+        if("password" in request.body)
+        {   
+
+            if(request.body.password==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep password field empty!!' }, response, 400);
+    
+            }
+
+        }
+
+
+
         const emailValidation =
             /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
         if (!emailValidation.test(request.body.username)) {
@@ -44,6 +95,7 @@ exports.create = async (request, response) => {
         }
 
 
+        
         if (!request.body.username || !request.body.password || !request.body.first_name ||
             !request.body.last_name
         ) {
@@ -162,17 +214,11 @@ exports.updateById = async (req, res) => {
             );
         }
 
-        if(req.body.username || req.body.account_created || req.body.account_updated)
-        {   
 
-            return setErrorResponse(
-                {
-                    message: "Request should not contain any one of the following : username, account_created, account_updated",
-                   
-                }, 
-                res,400
-            );
+        if (req.body.id) {
 
+            return setErrorResponse({ message: 'Invalid body ID should not be provided' },
+                res, 400);
         }
 
 
@@ -216,6 +262,63 @@ exports.updateById = async (req, res) => {
 
         }
 
+
+
+
+        if(req.body.username || req.body.account_created || req.body.account_updated)
+        {   
+
+            return setErrorResponse(
+                {
+                    message: "Request should not contain any one of the following : username, account_created, account_updated",
+                   
+                }, 
+                res,400
+            );
+
+        }
+
+
+        // if("first_name" in req.body)
+        // {   
+
+        //     if(req.body.first_name==="")
+        //     {
+        //         return setErrorResponse(
+        //             { message: 'You cannot keep first_name field empty!!' }, res, 400);
+    
+        //     }
+
+        // }
+
+        // // console.log(req.body.last_name=="")
+        // // console.log(req.body.last_name==="")
+        // // console.log(Boolean(req.body.last_name))
+        // // console.log("password" in req.body)
+        // if("last_name" in req.body)
+        // {   
+
+        //     if(req.body.last_name==="")
+        //     {
+        //         return setErrorResponse(
+        //             { message: 'You cannot keep last_name field empty!!' }, res, 400);
+    
+        //     }
+
+        // }
+
+        // if("password" in req.body)
+        // {   
+
+        //     if(req.body.password==="")
+        //     {
+        //         return setErrorResponse(
+        //             { message: 'You cannot keep password field empty!!' }, res, 400);
+    
+        //     }
+
+        // }
+
         if (
             !req.body.first_name &&
             !req.body.last_name &&
@@ -238,15 +341,6 @@ exports.updateById = async (req, res) => {
             }
         }
 
-
-        // if (!id) {
-        //     return setErrorResponse(
-        //         {
-        //             message: "User id is not present in the request",
-        //         },
-        //         res,400
-        //     );
-        // }
 
         var userObj = await User.findByPk(id);
 
