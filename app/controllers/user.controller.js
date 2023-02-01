@@ -176,20 +176,6 @@ exports.updateById = async (req, res) => {
         }
 
 
-        if (
-            !req.body.first_name &&
-            !req.body.last_name &&
-            !req.body.password
-        ) {
-            return setErrorResponse(
-                {
-                    message: "Request body does not include any one of the following : first_name, last_name, password",
-                },
-                res, 400
-            );
-        }
-
-
         if("first_name" in req.body)
         {   
 
@@ -201,7 +187,7 @@ exports.updateById = async (req, res) => {
             }
 
         }
-        
+
         // console.log(req.body.last_name=="")
         // console.log(req.body.last_name==="")
         // console.log(Boolean(req.body.last_name))
@@ -230,7 +216,18 @@ exports.updateById = async (req, res) => {
 
         }
 
-
+        if (
+            !req.body.first_name &&
+            !req.body.last_name &&
+            !req.body.password
+        ) {
+            return setErrorResponse(
+                {
+                    message: "Request body does not include any one of the following : first_name, last_name, password",
+                },
+                res, 400
+            );
+        }
        
 
         if(req.body.password){

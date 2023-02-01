@@ -32,8 +32,8 @@ const Auth = async (req, res, next) => {
         where: { username: email } 
     });
     if (!user) {
-        return res.status(400).json({
-            message: 'Bad Request by the User'
+        return res.status(401).json({
+            message: 'Unauthorized access - Invalid username or password' 
         })
     }
     
@@ -41,7 +41,7 @@ const Auth = async (req, res, next) => {
     const isPasswordMatch = bcrypt.compareSync(password, user.password)
     if (!isPasswordMatch) {
         return res.status(401).json({
-            message: 'Not a Valid Authentication Credentials'
+            message: 'Unauthorized access - Invalid username or password'
         })
     }
     // validate if user is trying to access his personal account
