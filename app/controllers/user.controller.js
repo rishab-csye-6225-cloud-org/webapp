@@ -190,6 +190,49 @@ exports.updateById = async (req, res) => {
         }
 
 
+        if("first_name" in req.body)
+        {   
+
+            if(req.body.first_name==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep first_name field empty!!' }, res, 400);
+    
+            }
+
+        }
+        
+        // console.log(req.body.last_name=="")
+        // console.log(req.body.last_name==="")
+        // console.log(Boolean(req.body.last_name))
+        // console.log("password" in req.body)
+        if("last_name" in req.body)
+        {   
+
+            if(req.body.last_name==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep last_name field empty!!' }, res, 400);
+    
+            }
+
+        }
+
+        if("password" in req.body)
+        {   
+
+            if(req.body.password==="")
+            {
+                return setErrorResponse(
+                    { message: 'You cannot keep password field empty!!' }, res, 400);
+    
+            }
+
+        }
+
+
+       
+
         if(req.body.password){
             if(req.body.password.length < 5 || req.body.password.length > 15)
             {   
