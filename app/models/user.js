@@ -9,25 +9,8 @@ module.exports = (sequelize, Sequelize) => {
         
       },
   
-      username: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        unique: true,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-          isEmail: true,
-        },
-      },
-
-      password: {
-        type: Sequelize.STRING,
-        allowNull: false,
-        validate: {
-          notNull: true,
-          notEmpty: true,
-        },
-      },
+     
+    
   
       first_name: {
         type: Sequelize.STRING,
@@ -47,6 +30,29 @@ module.exports = (sequelize, Sequelize) => {
         },
       },
   
+
+      username: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        unique: true,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+          isEmail: true,
+        },
+      },
+
+
+      password: {
+        type: Sequelize.STRING,
+        allowNull: false,
+        validate: {
+          notNull: true,
+          notEmpty: true,
+        },
+      },
+
+
       account_created: {
         type: Sequelize.DATE,
         allowNull: false,

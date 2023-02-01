@@ -5,7 +5,7 @@ const db = require("./app/models");
 
 db.sequelize.sync();
 
-const PORT = config.APP_PORT ;
+const PORT = config.APP_PORT || 9001 ;
 
 
 app.listen(PORT, ()=>{
