@@ -26,6 +26,7 @@ exports.create = async (request, response) => {
 
         //validation s
         
+
         const emailValidation =
             /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
         if (!emailValidation.test(request.body.username)) {
@@ -174,6 +175,7 @@ exports.updateById = async (req, res) => {
 
         }
 
+
         if (
             !req.body.first_name &&
             !req.body.last_name &&
@@ -188,10 +190,12 @@ exports.updateById = async (req, res) => {
         }
 
 
-        if(req.body.password.length < 5 || req.body.password.length > 15)
-        {   
-            return setErrorResponse({ message: 'Password length should be between 5 and 15' }, res, 400);
-
+        if(req.body.password){
+            if(req.body.password.length < 5 || req.body.password.length > 15)
+            {   
+                return setErrorResponse({ message: 'Password length should be between 5 and 15' }, res, 400);
+    
+            }
         }
 
 
