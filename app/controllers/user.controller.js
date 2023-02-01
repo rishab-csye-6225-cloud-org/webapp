@@ -251,6 +251,14 @@ exports.updateById = async (req, res) => {
 
         }
 
+        if (!req.body.username || !req.body.password || !req.body.first_name ||
+            !req.body.last_name
+        ) {
+
+            return setErrorResponse({ message: 'username, password, first_name, and last_name are required fields' }, res, 400)
+
+        }
+
 
         //
         if (req.user.username != req.body.username) {
@@ -264,6 +272,13 @@ exports.updateById = async (req, res) => {
         }
 
 
+        if ("account_created" in req.body || "account_updated" in req.body) {
+
+
+            return setErrorResponse(
+                { message: ' Request body cannot contain account_created or account_updated field' }, res, 400);
+
+        }
 
 
         if (req.body.account_created || req.body.account_updated) {
@@ -277,18 +292,6 @@ exports.updateById = async (req, res) => {
             );
 
         }
-
-
-        if (!req.body.username || !req.body.password || !req.body.first_name ||
-            !req.body.last_name
-        ) {
-
-            return setErrorResponse({ message: 'username, password, first_name, and last_name are required fields' }, res, 400)
-
-        }
-
-        //
-
 
 
         if (
