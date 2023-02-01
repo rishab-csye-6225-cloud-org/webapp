@@ -12,7 +12,7 @@ HOST: process.env.DB_HOSTNAME ,
 USER: process.env.DB_USER ,
 PASSWORD: process.env.DB_PASSWORD,
 DB: process.env.DB_NAME,
-DIALECT: process.env.DB_DIALECT,
+DIALECT: process.env.DB_DIALECT || "postgres",
 PORT : process.env.DB_PORT ,
 APP_PORT : process.env.APP_PORT, 
 
