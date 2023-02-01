@@ -25,53 +25,45 @@ exports.create = async (request, response) => {
         console.log("in controller");
 
         //validation s
-        
 
-        if("username" in request.body)
-        {   
 
-            if(request.body.username==="")
-            {
+        if ("username" in request.body) {
+
+            if (request.body.username === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep username field empty!!' }, response, 400);
-    
+
             }
 
         }
 
 
-        if("first_name" in request.body)
-        {   
+        if ("first_name" in request.body) {
 
-            if(request.body.first_name==="")
-            {
+            if (request.body.first_name === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep first_name field empty!!' }, response, 400);
-    
+
             }
 
         }
 
-        if("last_name" in request.body)
-        {   
+        if ("last_name" in request.body) {
 
-            if(request.body.last_name==="")
-            {
+            if (request.body.last_name === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep last_name field empty!!' }, response, 400);
-    
+
             }
 
         }
 
-        if("password" in request.body)
-        {   
+        if ("password" in request.body) {
 
-            if(request.body.password==="")
-            {
+            if (request.body.password === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep password field empty!!' }, response, 400);
-    
+
             }
 
         }
@@ -87,7 +79,7 @@ exports.create = async (request, response) => {
 
         }
 
-  
+
         if (request.body.id) {
 
             return setErrorResponse({ message: 'Invalid request for user object: ID should not be provided' },
@@ -95,7 +87,7 @@ exports.create = async (request, response) => {
         }
 
 
-        
+
         if (!request.body.username || !request.body.password || !request.body.first_name ||
             !request.body.last_name
         ) {
@@ -104,18 +96,8 @@ exports.create = async (request, response) => {
 
         }
 
-        //values to be ignored 
-        // if(request.body.account_created || request.body.account_updated){
-        //     return setErrorResponse({ message: 'account_created and account_updated fileds should not be given when creating a user account' }
-        //     , response, 400);
 
-        // }
-
-
-        //
-
-        if(request.body.password.length < 5 || request.body.password.length > 15)
-        {   
+        if (request.body.password.length < 5 || request.body.password.length > 15) {
             return setErrorResponse({ message: 'Password length should be between 5 and 15' }, response, 400);
 
         }
@@ -142,10 +124,8 @@ exports.create = async (request, response) => {
                 first_name: request.body.first_name,
                 last_name: request.body.last_name,
                 password: hashedPassword,
-                username: request.body.username,
-            
-                 //account_created: new Date(),
-             //  account_updated: new Date()
+                username: request.body.username
+
             })
 
             // here the save() saves the the user instance in the database
@@ -186,7 +166,7 @@ exports.getById = async (req, res) => {
             }
         })
 
-        setSuccessResponse(value, res, 200);    
+        setSuccessResponse(value, res, 200);
 
 
     } catch (error) {
@@ -222,139 +202,118 @@ exports.updateById = async (req, res) => {
         }
 
 
-        if("first_name" in req.body)
-        {   
+        //new validation start
 
-            if(req.body.first_name==="")
-            {
+        if ("username" in req.body) {
+
+            if (req.body.username === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep username field empty!!' }, res, 400);
+
+            }
+
+        }
+
+
+
+        //new validation end
+
+
+
+        if ("first_name" in req.body) {
+
+            if (req.body.first_name === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep first_name field empty!!' }, res, 400);
-    
+
             }
 
         }
 
-        // console.log(req.body.last_name=="")
-        // console.log(req.body.last_name==="")
-        // console.log(Boolean(req.body.last_name))
-        // console.log("password" in req.body)
-        if("last_name" in req.body)
-        {   
 
-            if(req.body.last_name==="")
-            {
+        if ("last_name" in req.body) {
+
+            if (req.body.last_name === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep last_name field empty!!' }, res, 400);
-    
+
             }
 
         }
 
-        if("password" in req.body)
-        {   
+        if ("password" in req.body) {
 
-            if(req.body.password==="")
-            {
+            if (req.body.password === "") {
                 return setErrorResponse(
                     { message: 'You cannot keep password field empty!!' }, res, 400);
-    
+
             }
 
         }
 
 
-
-
-        if(req.body.username || req.body.account_created || req.body.account_updated)
-        {   
-
+        //
+        if (req.user.username != req.body.username) {
             return setErrorResponse(
                 {
-                    message: "Request should not contain any one of the following : username, account_created, account_updated",
-                   
-                }, 
-                res,400
-            );
+                    message: "Something wrong with the username entered, Please enter a correct username",
 
-        }
-
-
-        // if("first_name" in req.body)
-        // {   
-
-        //     if(req.body.first_name==="")
-        //     {
-        //         return setErrorResponse(
-        //             { message: 'You cannot keep first_name field empty!!' }, res, 400);
-    
-        //     }
-
-        // }
-
-        // // console.log(req.body.last_name=="")
-        // // console.log(req.body.last_name==="")
-        // // console.log(Boolean(req.body.last_name))
-        // // console.log("password" in req.body)
-        // if("last_name" in req.body)
-        // {   
-
-        //     if(req.body.last_name==="")
-        //     {
-        //         return setErrorResponse(
-        //             { message: 'You cannot keep last_name field empty!!' }, res, 400);
-    
-        //     }
-
-        // }
-
-        // if("password" in req.body)
-        // {   
-
-        //     if(req.body.password==="")
-        //     {
-        //         return setErrorResponse(
-        //             { message: 'You cannot keep password field empty!!' }, res, 400);
-    
-        //     }
-
-        // }
-
-        if (
-            !req.body.first_name &&
-            !req.body.last_name &&
-            !req.body.password
-        ) {
-            return setErrorResponse(
-                {
-                    message: "Request body does not include any one of the following : first_name, last_name, password",
                 },
                 res, 400
             );
         }
-       
 
-        if(req.body.password){
-            if(req.body.password.length < 5 || req.body.password.length > 15)
-            {   
+
+
+
+        if (req.body.account_created || req.body.account_updated) {
+
+            return setErrorResponse(
+                {
+                    message: "Request should not contain any one of the following : account_created and account_updated",
+
+                },
+                res, 400
+            );
+
+        }
+
+
+        if (!req.body.username || !req.body.password || !req.body.first_name ||
+            !req.body.last_name
+        ) {
+
+            return setErrorResponse({ message: 'username, password, first_name, and last_name are required fields' }, res, 400)
+
+        }
+
+        //
+
+
+
+        if (
+            !req.body.first_name &&
+            !req.body.last_name &&
+            !req.body.password && !req.body.username //
+        ) {
+            return setErrorResponse(
+                {
+                    message: "Request body does not include any one of the following : first_name, last_name, password, username",
+                },
+                res, 400
+            );
+        }
+
+
+        if (req.body.password) {
+            if (req.body.password.length < 5 || req.body.password.length > 15) {
                 return setErrorResponse({ message: 'Password length should be between 5 and 15' }, res, 400);
-    
+
             }
         }
 
 
         var userObj = await User.findByPk(id);
-
-
-        // check if username is present in the request body
-        // if present, verify it matches the username in the db
-        if (req.body.username) {
-
-            return setErrorResponse(
-                { message: "Username cannot be updated", },
-                res, 400
-            );
-
-        }
 
 
         // check if id is present in the request body and if it matches the id in the request
@@ -399,10 +358,8 @@ exports.updateById = async (req, res) => {
         const userUpdate = {
             first_name: req.body.first_name,
             last_name: req.body.last_name,
-            password: updateHashedPassword != "" ?  updateHashedPassword : req.body.password,
-            
-            //added this check if updated
-            //account_updated: new Date()
+            password: updateHashedPassword != "" ? updateHashedPassword : req.body.password,
+
         }
 
 
