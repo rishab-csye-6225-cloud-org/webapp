@@ -9,7 +9,7 @@
 
 ## Instructions to run the Assignment
 
-1. Clone the repository
+1. Clone the organization's (rishab-csye-6225-cloud-org)  webapp(main) repository
 2. Go to the webapp folder first 
     - Install node modules : npm i
     - Add the .env file (with all the environment variables) in the root directory
