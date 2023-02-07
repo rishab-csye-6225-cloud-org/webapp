@@ -6,7 +6,7 @@ describe('Testing the Application', function() {
     it('GET request /healthz of the application', (done) => {
         supertest(app)
             .get('/healthz')
-            .expect(400)
+            .expect(200)
             .end((err, response) => {
                 if (err) return done(err)
                 return done()
