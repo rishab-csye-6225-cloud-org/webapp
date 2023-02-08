@@ -217,3 +217,25 @@ exports.getProductById = async (req, res) => {
 }
 
 
+exports.deleteById = async (req, res) => {
+
+    try {
+
+        const id = req.params.id;
+
+
+        const productValue = await Product.destroy({
+            where: { id }
+        });
+
+        setSuccessResponse(productValue, res, 204);
+
+
+    } catch (error) {
+
+        setErrorResponse(error, res, 400);
+    }
+
+}
+
+
