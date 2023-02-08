@@ -329,8 +329,6 @@ exports.updateProductById = async (request, response) => {
 
         }
 
-
-
         //end 
         const productUpdate = {
             name: request.body.name,
@@ -411,7 +409,7 @@ exports.patchProductById = async (request, response) => {
                 { message: 'You cannot add id and owner_user_id as fields!! Only fields : name, description, manufacturer, sku and quantity can be added' }, response, 400);
         }
 
-        
+
 
         if (typeof (request.body.quantity) == 'string') {
             return setErrorResponse(
@@ -438,8 +436,6 @@ exports.patchProductById = async (request, response) => {
                 }
             }
         }
-
-
 
         //end 
         const productUpdate = {
