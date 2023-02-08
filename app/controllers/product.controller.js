@@ -211,7 +211,7 @@ exports.getProductById = async (req, res) => {
         return res.status(400).json({
             message: 'Please enter the id in number/integer format in the url'
         })
-        //setErrorResponse(error, res, 400);
+       
     }
 
 }
@@ -406,7 +406,7 @@ exports.patchProductById = async (request, response) => {
 
         if (request.body.id || request.body.owner_user_id) {
             return setErrorResponse(
-                { message: 'You cannot add id and owner_user_id as fields!! Only fields : name, description, manufacturer, sku and quantity can be added' }, response, 400);
+                { message: 'You cannot add id and owner_user_id as fields!! Only fields : name, description, manufacturer, sku and quantity can be updated' }, response, 400);
         }
 
 
