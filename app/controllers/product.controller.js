@@ -358,3 +358,120 @@ exports.updateProductById = async (request, response) => {
         setErrorResponse(error, response, 400);
     }
 }
+
+
+//Patch
+exports.patchProductById = async (request, response) => {
+
+    try {
+        const id = request.params.id;
+
+        //validation
+        if ("name" in request.body) {
+            if (request.body.name === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep product name field empty!!' }, response, 400);
+            }
+        }
+
+        if ("description" in request.body) {
+            if (request.body.description === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep description field empty!!' }, response, 400);
+            }
+        }
+
+        if ("sku" in request.body) {
+            if (request.body.sku === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep sku field empty!!' }, response, 400);
+            }
+        }
+
+        if ("manufacturer" in request.body) {
+            if (request.body.manufacturer === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep manufacturer field empty!!' }, response, 400);
+            }
+        }
+
+        if ("quantity" in request.body) {
+
+            if (request.body.quantity === "") {
+                return setErrorResponse(
+                    { message: 'You cannot keep quantity field empty!!' }, response, 400);
+
+            }
+
+        }
+
+
+        if (request.body.id || request.body.owner_user_id) {
+            return setErrorResponse(
+                { message: 'You cannot add id and owner_user_id as fields!! Only fields : name, description, manufacturer, sku and quantity can be added' }, response, 400);
+        }
+
+        
+
+        if (typeof (request.body.quantity) == 'string') {
+            return setErrorResponse(
+                { message: 'You must enter the quantity of type number' }, response, 400);
+        }
+
+       // quantity's validation for range
+        if (request.body.quantity < 0 || request.body.quantity > 100) {
+            return setErrorResponse(
+                { message: 'You must enter the quantity between 0 and 100' }, response, 400);
+        }
+
+        //validation for sku duplicate should not be allowed
+        if (request.body.sku) {
+            const getProduct = await Product.findOne({
+                where: {
+                    sku: request.body.sku,
+                },
+            })
+
+            if (getProduct != null) {
+                if (getProduct.id != request.params.id) {
+                    return setErrorResponse({ message: 'Product with same sku already exist. Please enter a different id' }, response, 400)
+                }
+            }
+        }
+
+
+
+        //end 
+        const productUpdate = {
+            name: request.body.name,
+            description: request.body.description,
+            sku: request.body.sku,
+            manufacturer: request.body.manufacturer,
+            quantity: request.body.quantity
+
+        }
+
+        const val = await Product.update(productUpdate, {
+            where: { id: id }
+        })
+
+        if (!val) {
+            return setErrorResponse(
+                {
+                    message: "Cannot update the product",
+                },
+                response, 400
+            );
+        }
+
+        return setSuccessResponse(val, response, 204);
+
+
+    } catch (error) {
+       
+        setErrorResponse(err, response, 400);
+    }
+
+
+
+}
