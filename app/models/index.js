@@ -17,4 +17,7 @@ db.sequelize = sequelize;
 
 db.userModel = require("./user")(sequelize, Sequelize);
 
+//adding new table
+db.productModel = require("./product")(sequelize, Sequelize);
+
 module.exports = db;

@@ -1,8 +1,10 @@
 const db = require("../models");
-const { userModel } = require("../models/index.js");
+const { userModel,productModel } = require("../models/index.js");
 const bcrypt = require("bcrypt")
 
 const User = userModel;
+
+const Product = productModel;
 
 const Op = db.Sequelize.Op;
 
@@ -194,14 +196,11 @@ exports.updateById = async (req, res) => {
             );
         }
 
-
         if (req.body.id) {
 
             return setErrorResponse({ message: 'Invalid body ID should not be provided' },
                 res, 400);
         }
-
-
         //new validation start
 
         if ("username" in req.body) {
@@ -214,11 +213,7 @@ exports.updateById = async (req, res) => {
 
         }
 
-
-
         //new validation end
-
-
 
         if ("first_name" in req.body) {
 
@@ -273,13 +268,10 @@ exports.updateById = async (req, res) => {
 
 
         if ("account_created" in req.body || "account_updated" in req.body) {
-
-
             return setErrorResponse(
                 { message: ' Request body cannot contain account_created or account_updated field' }, res, 400);
 
         }
-
 
         if (req.body.account_created || req.body.account_updated) {
 
@@ -292,7 +284,6 @@ exports.updateById = async (req, res) => {
             );
 
         }
-
 
         if (
             !req.body.first_name &&
@@ -307,14 +298,12 @@ exports.updateById = async (req, res) => {
             );
         }
 
-
         if (req.body.password) {
             if (req.body.password.length < 5 || req.body.password.length > 15) {
                 return setErrorResponse({ message: 'Password length should be between 5 and 15' }, res, 400);
 
             }
         }
-
 
         var userObj = await User.findByPk(id);
 
@@ -344,9 +333,6 @@ exports.updateById = async (req, res) => {
                 res, 400
             );
         }
-
-
-
         //validation e
 
 
@@ -385,6 +371,10 @@ exports.updateById = async (req, res) => {
         setErrorResponse(error, res, 400);
     }
 }
+
+
+
+
 
 
 

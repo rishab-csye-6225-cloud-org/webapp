@@ -44,3 +44,48 @@
 14. Have also set branch protection rules for main branch(org)
 15. Also, checked the workflow after failing it as it should not allow the user to merge the changes in the main org repo if the workflow fails
 16. Followed the structure as professor explained inorder to commit code to the main org repo
+
+
+
+# Assignment 2
+
+## The assignment was to build the REST Api endpoints  like Get, Put, Post, etc - Web application for Product as it is an Inventory Management system with proper validations and http status codes. 
+
+## For database bootstrapping we are using sequelize orm which would help in creating the database schema automatically once defined in the model even if we drop the entire table.
+
+## Along with building web app, we are also working on AWS wherein we are working on setting up AWS Organization , IAM wherein we need to create users for each accounts which are root,dev and demo.
+
+## We also need to create a group in each accounts for TA where we will be granting access to all the TAs(readOnlyAccess).
+
+## Instructions to run the Assignment
+
+1. Clone the organization's (rishab-csye-6225-cloud-org)  webapp(main) repository
+2. Go to the webapp folder first 
+    - Install node modules : npm install
+    - Add the .env file (with all the environment variables) in the root directory
+
+3. Start the Postgres database
+    - brew services start postgresql@14
+
+4. Start the server
+    - npm start
+
+5. Use Postman inorder to test the REST Api requests for the Product
+
+
+## Steps followed for the assignment 2 were as follows:
+1. Used npm commands to locally install the necessary libraries 
+2. Developed the REST API endpoints for Product(Inventory Management) using nodejs 
+3. Utilized Postgres as the database
+4. Handeled the error/edge cases using proper error responses and also http status codes
+5. Used Sequelize ORM for database Bootstrapping as it will automatically create the table schema as per specified in the model (product,user,etc)
+6. Implemented all the types of request as mentioned in the swagger document except(Patch as it was optional)
+7. In terms of AWS, created a root account under NEU email id
+8. Then created an organization wherein added two accounts dev and demo
+9. In root account created IAM user and granted AdminAccess to it
+10. Created group of TA wherein added all the TA accounts and generated tha passwords for each TA user account and copied that in a sheet 
+11. Repeated the above step for all three accounts root, dev and demo
+12. Created tya IAM user with admin access in all three accounts 
+13. Further added MFA for all three IAM user accounts
+14. Also, added MFA for my root account
+15. Finally after the above steps and generating the passwords I mailed all these information to the respective TAs

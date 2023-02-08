@@ -6,15 +6,21 @@ const bodyParser = require("body-parser");
 const cors  = require("cors");
 
 const app = express();
-const routes = require('./app/routes/user.routes.js');
+const userRoutes = require('./app/routes/user.routes.js');
+
+const productRoutes = require('./app/routes/product.routes.js');
+
 
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended:true}));
 
 
+app.use("/v1" , productRoutes);
 
-app.use("/v1" , routes);
+app.use("/v1" , userRoutes);
+
+
 
 app.get("/" ,  (req,res)=>{
     res.json({
