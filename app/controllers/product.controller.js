@@ -95,11 +95,14 @@ exports.createProduct = async (request, response) => {
         }
 
 
+        if(request.body.quantity){
+            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+                return setErrorResponse(
+                    { message: 'You must enter the quantity of type number' }, response, 400);
+            }
 
-        if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
-            return setErrorResponse(
-                { message: 'You must enter the quantity of type number' }, response, 400);
         }
+       
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
@@ -290,10 +293,15 @@ exports.updateProductById = async (request, response) => {
         }
 
 
-        if (typeof (request.body.quantity) == 'string' ||  !Number.isInteger(request.body.quantity)) {
-            return setErrorResponse(
-                { message: 'You must enter the quantity of type number' }, response, 400);
+
+        if(request.body.quantity){
+            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+                return setErrorResponse(
+                    { message: 'You must enter the quantity of type number' }, response, 400);
+            }
+
         }
+
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
@@ -417,9 +425,13 @@ exports.patchProductById = async (request, response) => {
 
 
 
-        if (typeof (request.body.quantity) == 'string' ||  !Number.isInteger(request.body.quantity)) {
-            return setErrorResponse(
-                { message: 'You must enter the quantity of type number' }, response, 400);
+
+        if(request.body.quantity){
+            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+                return setErrorResponse(
+                    { message: 'You must enter the quantity of type number' }, response, 400);
+            }
+
         }
 
 
