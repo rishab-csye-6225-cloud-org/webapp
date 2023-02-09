@@ -86,21 +86,20 @@ exports.createProduct = async (request, response) => {
 
         }
 
-        // if (!request.body.name || !request.body.description || !request.body.sku || !request.body.manufacturer || !request.body.quantity) {
-
-        //     return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
-
-        // }
 
 
-
-        if (typeof (request.body.quantity) == 'string') {
+        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
             return setErrorResponse(
-                { message: 'You must enter the quantity of type number' }, response, 400);
+                { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
 
 
-        
+
+        if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+            return setErrorResponse(
+                { message: 'You must enter the quantity of type number' }, response, 400);
+        }
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
@@ -116,7 +115,6 @@ exports.createProduct = async (request, response) => {
 
         }
     
-
         //validation for sku duplicate should not be allowed
         const getProduct = await Product.findOne({
             where: {
@@ -164,14 +162,7 @@ exports.createProduct = async (request, response) => {
 
     catch (error) {
 
-        var err =[];
-        if(error && error.errors){
-            error.errors.forEach(element => {
-                err.push(element.message);
-            });
-        }
-
-       setErrorResponse(err, response, 400);
+       setErrorResponse(error, response, 400);
     }
 
 }
@@ -291,8 +282,15 @@ exports.updateProductById = async (request, response) => {
             return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
         }
 
+        //rishab
+        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
+            return setErrorResponse(
+                { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
+        }
 
-        if (typeof (request.body.quantity) == 'string') {
+
+        if (typeof (request.body.quantity) == 'string' ||  !Number.isInteger(request.body.quantity)) {
             return setErrorResponse(
                 { message: 'You must enter the quantity of type number' }, response, 400);
         }
@@ -410,11 +408,20 @@ exports.patchProductById = async (request, response) => {
         }
 
 
+        
+        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
+            return setErrorResponse(
+                { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
+        }
 
-        if (typeof (request.body.quantity) == 'string') {
+
+
+        if (typeof (request.body.quantity) == 'string' ||  !Number.isInteger(request.body.quantity)) {
             return setErrorResponse(
                 { message: 'You must enter the quantity of type number' }, response, 400);
         }
+
 
        // quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
@@ -467,7 +474,5 @@ exports.patchProductById = async (request, response) => {
        
         setErrorResponse(err, response, 400);
     }
-
-
 
 }
