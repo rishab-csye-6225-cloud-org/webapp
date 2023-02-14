@@ -416,6 +416,13 @@ exports.patchProductById = async (request, response) => {
         }
 
 
+        if(request.body.name === null || request.body.manufacturer === null || request.body.description === null 
+            || request.body.sku === null || request.body.quantity === null)
+        {
+            return setErrorResponse(
+                { message: 'You cannot enter null for these fields : name, description, sku, quantity and manufacturer' }, response, 400);
+        }
+
         
         if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
         Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
@@ -484,7 +491,7 @@ exports.patchProductById = async (request, response) => {
 
     } catch (error) {
        
-        setErrorResponse(err, response, 400);
+        setErrorResponse(error, response, 400);
     }
 
 }
