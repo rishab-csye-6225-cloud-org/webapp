@@ -74,11 +74,12 @@ exports.createProduct = async (request, response) => {
 
         }
 
-        if (request.body.id || request.body.owner_user_id) {
+        if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
+            || request.body.date_added) {
 
             return setErrorResponse(
                 {
-                    message: "Request should not contain any one of the following : id, and owner_user_id",
+                    message: "Request should not contain any one of the following : id, owner_user_id, date_added and date_last_updated",
 
                 },
                 response, 400
@@ -323,11 +324,13 @@ exports.updateProductById = async (request, response) => {
         }
 
 
-        if (request.body.id || request.body.owner_user_id) {
+        
+        if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
+            || request.body.date_added) {
 
             return setErrorResponse(
                 {
-                    message: "Request should not contain any one of the following : id, and owner_user_id",
+                    message: "Request should not contain any one of the following : id, owner_user_id, date_added and date_last_updated",
 
                 },
                 response, 400
@@ -410,10 +413,20 @@ exports.patchProductById = async (request, response) => {
         }
 
 
-        if (request.body.id || request.body.owner_user_id) {
+
+        if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
+            || request.body.date_added) {
+
             return setErrorResponse(
-                { message: 'You cannot add id and owner_user_id as fields!! Only fields : name, description, manufacturer, sku and quantity can be updated' }, response, 400);
+                {
+                    message: "You cannot add id,owner_user_id, date_added and date_last_updated as fields!! Only fields : name, description, manufacturer, sku and quantity can be updated",
+
+                },
+                response, 400
+            );
+
         }
+
 
 
         if(request.body.name === null || request.body.manufacturer === null || request.body.description === null 
