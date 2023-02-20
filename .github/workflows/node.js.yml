@@ -29,6 +29,7 @@ jobs:
 
   packer_validate:
     runs-on: ubuntu-latest
+    needs: build
     name: Validating Packer - AMI Build
     steps: 
       - name: Checkout code from branch

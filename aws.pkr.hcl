@@ -79,7 +79,8 @@ build {
       "CHECKPOINT_DISABLE=1"
     ]
     scripts = [
-      "scripts/start.sh"
+      "scripts/start.sh",
+      "systemd.sh"
       
     ]
     //this will check till 5 min if not completed then the packer will stop
