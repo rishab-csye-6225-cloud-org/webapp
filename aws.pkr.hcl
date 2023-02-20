@@ -80,7 +80,7 @@ build {
     ]
     scripts = [
       "scripts/start.sh",
-      "systemd.sh"
+      "scripts/systemd.sh"
       
     ]
     //this will check till 5 min if not completed then the packer will stop
