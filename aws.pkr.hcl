@@ -27,7 +27,7 @@ variable "dev" {
 # https://www.packer.io/plugins/builders/amazon/ebs
 source "amazon-ebs" "my-ami" {
   region          = "${var.aws_region}"
-  profile         = "${var.dev}"
+  //profile         = "${var.dev}"
   ami_name        = "csye6225_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   ami_description = "AMI for CSYE 6225"
   ami_regions = [
@@ -67,10 +67,10 @@ build {
   }
 
 
-  # provisioner "file" {
-  #   source      = "./scripts/webapp.service"
-  #   destination = "/tmp/webapp.service"
-  # }
+  provisioner "file" {
+    source      = "./scripts/webapp.service"
+    destination = "/tmp/webapp.service"
+  }
 
 
   provisioner "shell" {
@@ -80,8 +80,7 @@ build {
     ]
     scripts = [
       "scripts/start.sh",
-      "scripts/systemd.sh"
-      
+      "scripts/systemd.sh"  
     ]
     //this will check till 5 min if not completed then the packer will stop
     //timeout = "15m"

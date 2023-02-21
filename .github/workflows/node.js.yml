@@ -8,14 +8,9 @@ on:
   pull_request:
     branches: [ "main" ]
     
-  
-
 jobs:
   build:
-
     runs-on: ubuntu-latest
-
-
     steps:
     - uses: actions/checkout@v2
     - name: Use Node.js
@@ -27,29 +22,63 @@ jobs:
     - run: npm test
 
 
-  packer_validate:
-    runs-on: ubuntu-latest
+  # packer_validate:
+  #   runs-on: ubuntu-latest
+  #   needs: build
+  #   name: Validating Packer - AMI Build
+  #   steps: 
+  #     - name: Checkout code from branch
+  #       uses: actions/checkout@v2
+
+  #     - name: Zip webapp 
+  #       run: |
+  #         zip -r webapp.zip ./
+  #         ls   
+
+  #     - name: Setup `packer`
+  #       uses: hashicorp/setup-packer@main
+  #       id: setup
+  #       with:
+  #         version: "1.8.3" # or `latest`
+          
+  #     - name: Run `packer init`
+  #       id: init
+  #       run: "packer init ./aws.pkr.hcl"
+
+  #     - name: Run `packer validate`
+  #       id: validate
+  #       run: "packer validate ./aws.pkr.hcl"
+
+  packer_build_ami:
     needs: build
-    name: Validating Packer - AMI Build
+    runs-on: ubuntu-latest
+    name: Building Packer - AMI 
     steps: 
-      - name: Checkout code from branch
+      - name: Step 1 - Checkout code from branch
         uses: actions/checkout@v2
 
-      - name: Zip webapp 
+      - name: Step 2 - Zip webapp 
         run: |
           zip -r webapp.zip ./
-          ls   
+          ls 
 
-      - name: Setup `packer`
+      - name: Step 3 - Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1    
+
+      - name: Step 4 - Setup `packer`
         uses: hashicorp/setup-packer@main
         id: setup
         with:
-          version: "1.8.3" # or `latest`
+          version: "1.8.3" # or `latest`    
           
-      - name: Run `packer init`
+      - name: Step 5 - Run `packer init`
         id: init
         run: "packer init ./aws.pkr.hcl"
 
-      - name: Run `packer validate`
+      - name: Step 6 - Run `packer validate`
         id: validate
         run: "packer validate ./aws.pkr.hcl"
