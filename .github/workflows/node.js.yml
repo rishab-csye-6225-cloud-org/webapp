@@ -62,8 +62,6 @@ jobs:
         run: |
           pwd
           ls
-          cd ./webapp
-          ls
           zip -r webapp.zip ./
           ls
           unzip webapp.zip ./
