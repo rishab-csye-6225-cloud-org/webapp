@@ -23,7 +23,7 @@ sudo systemctl enable postgresql
 sudo systemctl status postgresql
 sudo -u postgres psql
 sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'Rishab16';"
-\q
+
 echo "password changed"
 
 echo "made changes in the conf file"
@@ -39,16 +39,21 @@ mkdir webapp
 sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 
 
-#echo "Permissions on the webapp configured"
-#giving permissions to folder where webapp is copied to read, write, and execute to all 
-#owner , onwe-group and outside world as well
-sudo chmod -R 777 /home/ec2-user/
+
 
 cd /home/ec2-user/webapp/
 pwd
 ls
 unzip webapp.zip  -d /home/ec2-user/webapp/
 pwd
+#echo "Permissions on the webapp configured"
+#giving permissions to folder where webapp is copied to read, write, and execute to all 
+#owner , onwe-group and outside world as well
+cd /
+sudo chmod -R 777 /home/ec2-user/webapp
+cd /home/ec2-user/webapp/
+
+
 ls
 rm -rf webapp.zip
 ls
