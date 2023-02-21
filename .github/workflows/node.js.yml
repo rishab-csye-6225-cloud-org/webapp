@@ -81,4 +81,4 @@ jobs:
 
       - name: Step 6 - Run `packer validate`
         id: validate
-        run: "packer validate ./aws.pkr.hcl"
+        run: "packer validate ./aws.pkr.hcl" 
