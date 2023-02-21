@@ -23,7 +23,7 @@ sudo systemctl enable postgresql
 sudo systemctl status postgresql
 sudo -u postgres psql
 sudo -u postgres psql -c "ALTER USER postgres WITH PASSWORD 'Rishab16';"
-
+\q
 echo "password changed"
 
 echo "made changes in the conf file"
@@ -34,7 +34,7 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 
 ls
-mkdir webapp  
+mkdir webapp
 
 sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 
@@ -51,18 +51,12 @@ unzip webapp.zip  -d /home/ec2-user/webapp/
 pwd
 ls
 rm -rf webapp.zip
+ls
 pwd
 
 echo "In webapp folder"
 #cd webapp/
 
-#setting env variables so that the application can use it
-# export DB_HOSTNAME=localhost
-# export DB_PASSWORD=Rishab16
-# export DB_USER=postgres
-# export DB_NAME=postgres
-# export DB_PORT=5432
-# export APP_PORT=9000
 
 npm i
 npm test
