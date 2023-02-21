@@ -34,9 +34,9 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 
 ls
-mkdir webapp  #ideally this i can ignore
+mkdir webapp  
 
-sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip  
+sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 
 
 #echo "Permissions on the webapp configured"
@@ -47,14 +47,13 @@ sudo chmod -R 777 /home/ec2-user/
 cd /home/ec2-user/webapp/
 pwd
 ls
-#unzip webapp.zip -d /home/ec2-user/
-unzip webapp.zip
+unzip webapp.zip  -d /home/ec2-user/webapp/
 pwd
 ls
-
+rm -rf webapp.zip
 pwd
 
-echo "In webapp folder "
+echo "In webapp folder"
 #cd webapp/
 
 #setting env variables so that the application can use it
