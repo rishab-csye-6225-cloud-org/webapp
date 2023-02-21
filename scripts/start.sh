@@ -32,9 +32,7 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 #sudo systemctl restart postgresql  
 
-
 ls
-#mkdir webapp
 
 sudo mkdir /home/ec2-user/webapp
 
@@ -58,15 +56,12 @@ pwd
 
 #cd /home/ec2-user/webapp/
 
-
 ls
 rm -rf webapp.zip
 ls
 pwd
 
 echo "In webapp folder"
-#cd webapp/
-
 
 npm i
 npm test
