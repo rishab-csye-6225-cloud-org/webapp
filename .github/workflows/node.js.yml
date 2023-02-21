@@ -60,17 +60,16 @@ jobs:
 
       - name: step - to check how zip happens
         run: |
-        pwd
-        ls
-        cd ./webapp
-        ls
-        zip -r webapp.zip ./
-        ls
-        unzip webapp.zip ./
-        pwd
-        ls
-        cd webapp 
-
+          pwd
+          ls
+          cd ./webapp
+          ls
+          zip -r webapp.zip ./
+          ls
+          unzip webapp.zip ./
+          pwd
+          ls
+          cd webapp 
 
       - name: Step 2 - Zip webapp 
         run: |
