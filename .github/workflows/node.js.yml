@@ -57,18 +57,6 @@ jobs:
       - name: Step 1 - Checkout code from branch
         uses: actions/checkout@v2
 
-
-      - name: step - to check how zip happens
-        run: |
-          pwd
-          ls
-          zip -r webapp.zip ./
-          ls
-          unzip webapp.zip ./
-          pwd
-          ls
-          cd webapp 
-
       - name: Step 2 - Zip webapp 
         run: |
           zip -r webapp.zip ./
