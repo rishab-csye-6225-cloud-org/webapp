@@ -64,7 +64,7 @@ jobs:
           echo "${{ secrets.AWS_ACCESS_KEY_ID }}"
 
       - name: Step 3 - Configure AWS Credentials
-        uses: aws-actions/configure-aws-credentials@master
+        uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }} 
@@ -83,3 +83,7 @@ jobs:
       - name: Step 6 - Run `packer validate`
         id: validate
         run: "packer validate ./aws.pkr.hcl" 
+
+      - name: Step 6 - Run `packer build`
+        id: build
+        run: "packer build ./aws.pkr.hcl" 
