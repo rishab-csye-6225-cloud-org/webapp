@@ -54,7 +54,8 @@ ls
 
 pwd
 
-cd webapp/
+echo "In webapp folder "
+#cd webapp/
 
 #setting env variables so that the application can use it
 # export DB_HOSTNAME=localhost
