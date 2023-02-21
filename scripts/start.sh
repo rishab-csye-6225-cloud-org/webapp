@@ -44,8 +44,11 @@ echo "Permissions on the webapp configured"
 #owner , onwe-group and outside world as well
 
 #cd /home/ec2-user
+pwd
+ls
 unzip webapp.zip -d /home/ec2-user/
-
+pwd
+ls
 sudo chmod -R 777 /home/ec2-user/webapp
 
 pwd
