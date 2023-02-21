@@ -61,6 +61,7 @@ jobs:
         run: |
           zip -r webapp.zip ./
           ls 
+          echo "${{ secrets.AWS_ACCESS_KEY_ID }}"
 
       - name: Step 3 - Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@master
