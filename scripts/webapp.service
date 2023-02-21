@@ -1,0 +1,20 @@
+[Unit]
+Description=Node js application
+Documentation=https://github.com/rishabNeu
+After=network.target
+
+[Service]
+Environment=DB_HOSTNAME=localhost
+Environment=DB_PASSWORD=Rishab16
+Environment=DB_USER=postgres
+Environment=DB_NAME=postgres
+Environment=DB_PORT=5432
+Environment=APP_PORT=9000
+
+Type=simple
+User=ec2-user
+ExecStart=/usr/bin/node /home/ec2-user/webapp/server.js
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
