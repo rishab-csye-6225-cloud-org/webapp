@@ -12,6 +12,11 @@ jobs:
       - name: Checkout code from branch
         uses: actions/checkout@v2
 
+      - name: Zip webapp 
+        run: |
+           zip -r webapp.zip ./
+           ls  
+
       - name: Setup `packer`
         uses: hashicorp/setup-packer@main
         id: setup
