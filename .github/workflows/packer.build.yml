@@ -6,7 +6,7 @@ on:
 
 jobs:
 #First Job for checking out the webapp code and testing it 
-   node_build:
+  node_build:
     runs-on: ubuntu-latest
     name: Installing & Testing the webapp (node application)
     steps:
@@ -54,6 +54,6 @@ jobs:
         id: validate
         run: "packer validate ./aws.pkr.hcl"
 
-       - name: Step 7 - Run `packer build`
-         id: build
-         run: "packer build ./aws.pkr.hcl"
+      - name: Step 7 - Run `packer build`
+        id: build
+        run: "packer build ./aws.pkr.hcl"
