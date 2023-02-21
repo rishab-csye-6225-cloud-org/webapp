@@ -30,7 +30,7 @@ echo "made changes in the conf file"
 
 sudo cat /var/lib/pgsql/data/pg_hba.conf
 
-#sudo systemctl restart postgresql
+#sudo systemctl restart postgresql  
 
 
 ls
@@ -39,14 +39,14 @@ cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 
 #giving permissions to folder where webapp is copied to read, write, and execute to all 
 #owner , onwe-group and outside world as well
-sudo chmod -R 777 /home/ec2-user/webapp/   
+sudo chmod -R 777 /home/ec2-user/webapp 
 
 echo "Permissions on the webapp configured"
 
 cd /home/ec2-user/webapp/
 unzip webapp.zip -d /home/ec2-user/webapp/
 pwd
-cd webapp/
+# cd webapp/
 
 #setting env variables so that the application can use it
 # export DB_HOSTNAME=localhost
