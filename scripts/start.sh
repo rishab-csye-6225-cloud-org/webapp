@@ -37,7 +37,7 @@ ls
 #giving permissions to folder where webapp is copied to read, write, and execute to all 
 #owner , onwe-group and outside world as well
 #cd /
-chmod -R 755 /home/ec2-user/webapp
+chmod -R 755 /home/ec2-user/
 ls -al
 
 mkdir /home/ec2-user/webapp
