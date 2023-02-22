@@ -89,3 +89,19 @@
 13. Further added MFA for all three IAM user accounts
 14. Also, added MFA for my root account
 15. Finally after the above steps and generating the passwords I mailed all these information to the respective TAs
+
+
+
+# Assignment 4
+
+## The assignment was to build Custom AMI using Packer which will be used by the AWS EC2 Instance.
+
+## We need to use Terraform inorder to build the Infrastructure which involves creating the entire network involving vpc, subnets, ec2 instance, attach security groups to the instance  through terraform.
+
+## After the above setup we need to test our web application endpoints on the deployed EC2 instance which has our application up and running. Even when the application is rebooted it should by default start the application and we should be able to hit the endpoints
+
+
+## Steps followed for the assignment 4 were as follows:
+1. Created a Packer file wherein I defined all my configurations.
+2. Added some provisioners for files and shell scripting.
+3. 
