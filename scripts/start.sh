@@ -34,18 +34,17 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 ls
 
+sudo mkdir /home/ec2-user/webapp
+
 #giving permissions to folder where webapp is copied to read, write, and execute to all 
 #owner , onwe-group and outside world as well
 #cd /
-chmod -R 755 /home/ec2-user/
+sudo chmod -R 755 /home/ec2-user/webapp
 ls -al
-
-mkdir /home/ec2-user/webapp
-
 
 echo "Permissions on the webapp configured"
 
-cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
+sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 cd webapp/
 pwd
 ls
