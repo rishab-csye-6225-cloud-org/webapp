@@ -42,7 +42,7 @@ echo "Permissions on the webapp configured"
 #giving permissions to folder where webapp is copied to read, write, and execute to all 
 #owner , onwe-group and outside world as well
 #cd /
-sudo chmod -R 777 /home/ec2-user/webapp
+sudo chmod -R 755 /home/ec2-user/webapp
 ls -al
 
 sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip

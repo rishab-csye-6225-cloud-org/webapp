@@ -24,6 +24,18 @@ variable "dev" {
   default = "dev"
 }
 
+variable "account_dev" {
+  type    = string
+  default = "059217636044"
+}
+
+variable "account_demo" {
+  type    = string
+  default = "058461571541"
+}
+
+
+
 # https://www.packer.io/plugins/builders/amazon/ebs
 source "amazon-ebs" "my-ami" {
   region = "${var.aws_region}"
@@ -35,7 +47,7 @@ source "amazon-ebs" "my-ami" {
   ]
 
   //property for sharing the resource with other accounts
-  ami_users = ["059217636044", "058461571541"]
+  ami_users = ["${var.account_dev}", "${var.account_demo}"]
 
   aws_polling {
     delay_seconds = 120
