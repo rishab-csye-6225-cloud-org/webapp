@@ -29,4 +29,4 @@ jobs:
 
       - name: Step 5 - Run `packer validate`
         id: validate
-        run: "packer validate ./aws.pkr.hcl"
+        run: "packer validate --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
