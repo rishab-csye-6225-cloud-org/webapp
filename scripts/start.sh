@@ -35,74 +35,77 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 #start change
 
-chmod -R 755 /home/ec2-user/
+# chmod -R 755 /home/ec2-user/
 
-ls -al
-mkdir /home/ec2-user/webapp
+# ls -al
+# mkdir /home/ec2-user/webapp
 
-ls -al
+# ls -al
 
-chmod -R 755 /home/ec2-user/webapp
+# chmod -R 755 /home/ec2-user/webapp
 
-ls -al
+# ls -al
 
-cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
-
-
-
-#sudo cd /home/ec2-user/webapp/
-pwd
-ls
-
-#adding
-
-cd webapp/
-
-# unzip webapp.zip -d /home/ec2-user/webapp/
-unzip webapp.zip
+# cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
 
 
-echo "Permissions on the webapp configured"
 
-pwd
+# #sudo cd /home/ec2-user/webapp/
+# pwd
+# ls
+
+# #adding
+
+# cd webapp/
+
+# # unzip webapp.zip -d /home/ec2-user/webapp/
+# unzip webapp.zip
 
 
-npm i
-npm test
+# echo "Permissions on the webapp configured"
+
+# pwd
+
+
+# npm i
+# npm test
 
 
 
 #start end
 
 
-# ls
+ls
 
-# #sudo mkdir /home/ec2-user/webapp
-# mkdir webapp
-# #giving permissions to folder where webapp is copied to read, write, and execute to all 
-# #owner , onwe-group and outside world as well
-# #cd /
+#sudo mkdir /home/ec2-user/webapp
+mkdir webapp
+#giving permissions to folder where webapp is copied to read, write, and execute to all 
+#owner , onwe-group and outside world as well
+#cd /
 
-# #sudo chmod -R 777 /home/ec2-user/webapp
-# ls -al
+#sudo chmod -R 777 /home/ec2-user/webapp
+ls -al
 
 
-# sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
-# cd webapp/
-# pwd
-# ls
-# unzip webapp.zip  -d /home/ec2-user/webapp/
-# pwd
+sudo cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
+cd webapp/
+pwd
+ls
+unzip webapp.zip  -d /home/ec2-user/webapp/
+pwd
     
-# ls
-# rm -rf webapp.zip
-# ls
-# pwd
+ls
+rm -rf webapp.zip
+ls
+pwd
 
-# echo "In webapp folder"
+echo "In webapp folder"
 
-# npm i
-# npm test
+npm i
+npm test
+
+
+
 
 
 
