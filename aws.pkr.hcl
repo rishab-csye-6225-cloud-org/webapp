@@ -1,11 +1,11 @@
 variable "aws_region" {
   type    = string
-  default = "us-east-2"
+  default = "us-west-1"
 }
 
 variable "source_ami" {
   type    = string
-  default = "ami-0dfcb1ef8550277af" #Amazon Linux 2  
+  default = "ami-0dfcb1ef8550277af" #Amazon Linux 2
 }
 
 
