@@ -1,6 +1,6 @@
 variable "aws_region" {
   type    = string
-  default = "us-east-1"
+  default = "us-east-2"
 }
 
 variable "source_ami" {
@@ -25,16 +25,11 @@ variable "dev" {
   default = "dev"
 }
 
-variable "account_dev" {
-  type    = string
-  default = "059217636044"
-}
 
-variable "account_demo" {
-  type    = string
-  default = "058461571541"
+variable "ami_users" {
+  type    = list(string)
+  default = [""]
 }
-
 
 
 # https://www.packer.io/plugins/builders/amazon/ebs
@@ -48,8 +43,9 @@ source "amazon-ebs" "my-ami" {
   ]
 
   //property for sharing the resource with other accounts
-  ami_users = ["${var.account_dev}", "${var.account_demo}"]
- 
+  //ami_users = ["${var.account_dev}", "${var.account_demo}"]
+  ami_users = var.ami_users
+
   aws_polling {
     delay_seconds = 120
     max_attempts  = 50
@@ -69,6 +65,7 @@ source "amazon-ebs" "my-ami" {
 
   }
 }
+
 
 build {
   sources = ["source.amazon-ebs.my-ami"]
@@ -94,7 +91,7 @@ build {
       "scripts/start.sh",
       "scripts/systemd.sh"
     ]
-    //this will check till 5 min if not completed then the packer will stop
-    //timeout = "15m"
+    
+
   }
 }

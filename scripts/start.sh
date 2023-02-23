@@ -32,58 +32,9 @@ sudo cat /var/lib/pgsql/data/pg_hba.conf
 
 #sudo systemctl restart postgresql  
 
-
-#start change
-
-# chmod -R 755 /home/ec2-user/
-
-# ls -al
-# mkdir /home/ec2-user/webapp
-
-# ls -al
-
-# chmod -R 755 /home/ec2-user/webapp
-
-# ls -al
-
-# cp /tmp/webapp.zip /home/ec2-user/webapp/webapp.zip
-
-
-
-# #sudo cd /home/ec2-user/webapp/
-# pwd
-# ls
-
-# #adding
-
-# cd webapp/
-
-# # unzip webapp.zip -d /home/ec2-user/webapp/
-# unzip webapp.zip
-
-
-# echo "Permissions on the webapp configured"
-
-# pwd
-
-
-# npm i
-# npm test
-
-
-
-#start end
-
-
 ls
-
-#sudo mkdir /home/ec2-user/webapp
 mkdir webapp
-#giving permissions to folder where webapp is copied to read, write, and execute to all 
-#owner , onwe-group and outside world as well
-#cd /
 
-#sudo chmod -R 777 /home/ec2-user/webapp
 ls -al
 
 
