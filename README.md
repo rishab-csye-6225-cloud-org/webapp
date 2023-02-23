@@ -104,4 +104,10 @@
 ## Steps followed for the assignment 4 were as follows:
 1. Created a Packer file wherein I defined all my configurations.
 2. Added some provisioners for files and shell scripting.
-3. 
+3. Ran the file using packer commands
+4. Also used systemd to auto up my application even if reboot
+5. Used packer variables to run the packer to build ami
+6. Also mad github workflows for validating and building the ami
+7. If workflow fails then it will not allow to merge 
+8. Using github secrets for credentials 
+9. Also, applied a workflow for when the code is merged
