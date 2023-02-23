@@ -37,7 +37,8 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}    
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          region: us-east-1    
 
       - name: Step 4 - Setup `packer`
         uses: hashicorp/setup-packer@main
@@ -55,4 +56,4 @@ jobs:
 
       - name: Step 7 - Run `packer build`
         id: build
-        run: "packer build -var "aws_region={{ vars.AWS_REGION }}" ./aws.pkr.hcl"  
+        run: "packer build ./aws.pkr.hcl" 
