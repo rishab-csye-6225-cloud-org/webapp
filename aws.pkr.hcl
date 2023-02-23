@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "source_ami" {
   type    = string
-  default = "ami-0dfcb1ef8550277af" #Amazon Linux 2
+  default = "ami-0dfcb1ef8550277a" #Amazon Linux 2
 }
 
 variable "ssh_username" {
@@ -15,7 +15,7 @@ variable "ssh_username" {
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-05205e07844431c50"
+  default = "subnet-05205e07844431c5"
 
 }
 
