@@ -56,4 +56,4 @@ jobs:
 
       - name: Step 7 - Run `packer build`
         id: build
-        run: run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
+        run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
