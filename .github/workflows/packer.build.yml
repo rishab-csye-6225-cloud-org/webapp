@@ -55,4 +55,4 @@ jobs:
 
       - name: Step 7 - Run `packer build`
         id: build
-        run: "packer build ./aws.pkr.hcl"
+        run: "packer build -var "aws_region={{ vars.AWS_REGION }}" ./aws.pkr.hcl"  
