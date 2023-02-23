@@ -100,6 +100,18 @@
 
 ## After the above setup we need to test our web application endpoints on the deployed EC2 instance which has our application up and running. Even when the application is rebooted it should by default start the application and we should be able to hit the endpoints
 
+## Commands I used when developing this assignment
+1. Packer init for initializing the packer  
+ - packer init
+
+2. Packer validate -> inorder to validate the syntax of the written file
+ - packer validate --var-file=file.pkrvars.hcl ./
+
+3. Packer build -> to build the packer file 
+ - packer build --var-file=file.pkrvars.hcl ./
+
+Above, I am passing a variables file inorder to make some parameters dynamic based on region
+
 
 ## Steps followed for the assignment 4 were as follows:
 1. Created a Packer file wherein I defined all my configurations.
