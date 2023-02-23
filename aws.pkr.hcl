@@ -1,12 +1,13 @@
 variable "aws_region" {
   type    = string
-  default = "us-east-2"
+  default = "us-east-1"
 }
 
 variable "source_ami" {
   type    = string
-  default = "ami-0dfcb1ef8550277a" #Amazon Linux 2
+  default = "ami-0dfcb1ef8550277af" #Amazon Linux 2  
 }
+
 
 variable "ssh_username" {
   type    = string
@@ -15,7 +16,7 @@ variable "ssh_username" {
 
 variable "subnet_id" {
   type    = string
-  default = "subnet-05205e07844431c5"
+  default = "subnet-05205e07844431c50"
 
 }
 
@@ -43,12 +44,12 @@ source "amazon-ebs" "my-ami" {
   ami_name        = "csye6225_${formatdate("YYYY_MM_DD_hh_mm_ss", timestamp())}"
   ami_description = "AMI for CSYE 6225"
   ami_regions = [
-    "us-east-2",
+    "us-east-1",
   ]
 
   //property for sharing the resource with other accounts
   ami_users = ["${var.account_dev}", "${var.account_demo}"]
-
+ 
   aws_polling {
     delay_seconds = 120
     max_attempts  = 50
