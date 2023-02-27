@@ -26,6 +26,26 @@ exports.uploadImage = async (request, response) => {
     console.log("in upload image controller");
 
     try {
+
+        
+        
+        
+        if(request.file===undefined)
+        {
+            return response.status(400).json({
+                message: 'File is not uploaded. Please upload one!'
+            })
+        }
+
+        const fileType = request.file.mimetype.split('/').pop();
+
+        if(fileType!=='jpeg' && fileType!=='png')
+        {
+            return response.status(400).json({
+                message: 'Given file type not supported!'
+            })
+        }
+
         const result = await s3.uploadFile(request.file, request.user.id);
 
         console.log(result);
@@ -139,8 +159,6 @@ exports.getImageById = async (request, response) => {
         }
         }
       
-        
-
         const imageValue = await Image.findOne({
             where: { image_id: id }
         })

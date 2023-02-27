@@ -55,7 +55,7 @@ function fileExistsS3(filename) {
 
 }
 
-module.exports = { uploadFile, deleteFile };
+module.exports = { uploadFile, deleteFile, fileExistsS3 };
 
 
 

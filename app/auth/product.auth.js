@@ -1,8 +1,12 @@
-const { productModel, userModel } = require("../models/index.js");
+const { productModel, userModel, imageModel } = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const product = require("../models/product.js");
 const Product = productModel;
 const User = userModel;
+
+//image
+const image= require("../models/image.js");
+const Image = imageModel;
 
 const productAuth = async (req, res, next) => {
 
@@ -80,30 +84,34 @@ const productAuth = async (req, res, next) => {
         })
     }
 
-
-    //sku ka validation
-    // const skuCheck = await Product.findOne({
-    //     where: { sku: req.body.sku }
-    // })
-
-
-    // if(req.method == "PUT"){
-    //     if(parseInt(req.params.id) != skuCheck.id)
-    //     {
-    //         return res.status(400).json({
-    //             message: 'Please enter a different sku as it already present in the db'
-    //         })
-    //     }
-
-    // }
-    //sku ka validation end
-
-
-    // }else{
-    //     return res.status(400).json({
-    //         message: 'Please enter the id in number/integer format in the url'
-    //     })
-    // }
+    //code for image authentication
+    try{
+        if(parseInt(req.params.image_id))
+        {
+            const imageVal = await Image.findOne({
+                where: { image_id: req.params.image_id }
+            })
+    
+    
+            if(imageVal)
+            {
+                if (imageVal.product_id != req.params.id) {
+                    return res.status(403).json({
+                        message: 'Forbidden request'
+                    })
+                }
+            }
+        }else{
+            return res.status(400).json({
+                message: 'Please enter the id in number/integer format in the url'
+            })
+        }
+    }catch (err) {
+        return res.status(400).json({
+            message: 'Please enter the id in number/integer format in the url'
+        })
+    }
+    
 
     //success and the other call to the next callback function
     next();
