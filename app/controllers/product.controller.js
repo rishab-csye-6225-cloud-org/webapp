@@ -5,7 +5,6 @@ const bcrypt = require("bcrypt")
 
 const User = userModel;
 const Product = productModel;
-//const Op = db.Sequelize.Op;
 
 const setErrorResponse = (error, response, status) => {
     response.status(status);
@@ -150,7 +149,7 @@ exports.createProduct = async (request, response) => {
 
         const productData = {
             id: productRes.id,
-            name: productRes.name,
+            name: productRes.name,  
             description: productRes.description,
             sku: productRes.sku,
             manufacturer: productRes.manufacturer,
@@ -170,8 +169,6 @@ exports.createProduct = async (request, response) => {
     }
 
 }
-
-
 
 
 exports.getProductById = async (req, res) => {
@@ -217,8 +214,6 @@ exports.deleteById = async (req, res) => {
     try {
 
         const id = req.params.id;
-
-
         const productValue = await Product.destroy({
             where: { id }
         });

@@ -10,6 +10,8 @@ const userRoutes = require('./app/routes/user.routes.js');
 
 const productRoutes = require('./app/routes/product.routes.js');
 
+const imageRoutes = require('./app/routes/image.routes.js');
+
 
 app.use(bodyParser.json());
 
@@ -20,6 +22,7 @@ app.use("/v1" , productRoutes);
 
 app.use("/v1" , userRoutes);
 
+app.use("/v1" , imageRoutes);
 
 
 app.get("/" ,  (req,res)=>{
