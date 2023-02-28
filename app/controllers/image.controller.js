@@ -7,6 +7,10 @@ const Image = imageModel;
 const s3 = require("../utils/s3.util");
 const product = require("../models/product");
 
+const fs = require('fs')
+const { promisify } = require('util')
+
+const unlinkAsync = promisify(fs.unlink)
 
 
 const setErrorResponse = (error, response, status) => {
@@ -27,9 +31,6 @@ exports.uploadImage = async (request, response) => {
 
     try {
 
-        
-        
-        
         if(request.file===undefined)
         {
             return response.status(400).json({
@@ -37,30 +38,43 @@ exports.uploadImage = async (request, response) => {
             })
         }
 
-        const fileType = request.file.mimetype.split('/').pop();
+        //const fileType = request.file.mimetype.split('/').pop();
 
-        if(fileType!=='jpeg' && fileType!=='png')
+
+        // if(fileType!=='jpeg' && fileType!=='png')
+        // {
+        //     return response.status(400).json({
+        //         message: 'Given file type not supported!'
+        //     })
+        // }
+
+        const file = request.file;
+
+        if(!file.mimetype.includes("image/"))
         {
             return response.status(400).json({
-                message: 'Given file type not supported!'
-            })
+                         message: 'Given file type not supported!'
+                })
         }
 
+
         const result = await s3.uploadFile(request.file, request.user.id);
+
+        //unlink/delete from uploads
+        await unlinkAsync(request.file.path);
 
         console.log(result);
 
         if (result) {
             const image = Image.build({
-                s3_bucket_path: result.Location,
+                //s3_bucket_path: result.Location,
+                s3_bucket_path: result.Key,
                 product_id: request.params.id,
                 file_name: request.file.originalname,
                 date_created: new Date()
             });
 
             const imageRes = await image.save();
-
-
 
             const imageData = {
                 image_id: imageRes.image_id,
@@ -100,8 +114,9 @@ exports.deleteImageById = async (request, response) => {
         }
 
         // Check if image exists in s3
-        const fileName = image.s3_bucket_path.split('/').slice(-3).join('/');;
-        const exists = await s3.fileExistsS3(fileName);
+        //const fileName = image.s3_bucket_path.split('/').slice(-3).join('/');;
+        
+        const exists = await s3.fileExistsS3(image.s3_bucket_path);
         if (!exists) {
             return response.status(404).json({
                 message: 'Image not found! Please try with a different id',
@@ -112,9 +127,7 @@ exports.deleteImageById = async (request, response) => {
             //trying to get the url last three 
             const lastThreeSegments = image.s3_bucket_path.split('/').slice(-3).join('/');
 
-            //  const result = await s3.deleteFile(image.file_name);
-
-            const result = await s3.deleteFile(lastThreeSegments);
+            const result = await s3.deleteFile(image.s3_bucket_path);
 
             if (result) {
                 const imageValue = await Image.destroy({
@@ -150,8 +163,9 @@ exports.getImageById = async (request, response) => {
             }
 
               //if s3 mai exits karta ye check 
-        const fileName = imageVal.s3_bucket_path.split('/').slice(-3).join('/');;
-        const exists = await s3.fileExistsS3(fileName);
+        //const fileName = imageVal.s3_bucket_path.split('/').slice(-3).join('/');;
+        const exists = await s3.fileExistsS3(imageVal.s3_bucket_path);
+        //const exists = await s3.fileExistsS3(fileName);
         if (!exists) {
             return response.status(404).json({
                 message: 'Image not found! Please try with a different id',
