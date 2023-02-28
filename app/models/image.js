@@ -46,7 +46,8 @@ module.exports = (sequelize, Sequelize) => {
       },
     },
     {
-        createdAt: 'date_created'
+        createdAt: 'date_created',
+        updatedAt: false
     }
     );
   

@@ -52,7 +52,6 @@ const productAuth = async (req, res, next) => {
         })
     }
 
-
     try {
 
         if (parseInt(req.params.id)) {

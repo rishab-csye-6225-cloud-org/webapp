@@ -60,7 +60,7 @@ exports.uploadImage = async (request, response) => {
 
         const result = await s3.uploadFile(request.file, request.user.id);
 
-        //unlink/delete from uploads
+        //unlink from uploads
         await unlinkAsync(request.file.path);
 
         console.log(result);
@@ -125,7 +125,7 @@ exports.deleteImageById = async (request, response) => {
 
         if (image) {
             //trying to get the url last three 
-            const lastThreeSegments = image.s3_bucket_path.split('/').slice(-3).join('/');
+            //const lastThreeSegments = image.s3_bucket_path.split('/').slice(-3).join('/');
 
             const result = await s3.deleteFile(image.s3_bucket_path);
 
