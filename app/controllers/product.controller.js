@@ -1,10 +1,15 @@
 const db = require("../models");
-const { userModel, productModel } = require("../models/index.js");
+const { userModel, productModel, imageModel } = require("../models/index.js");
 
 const bcrypt = require("bcrypt")
 
 const User = userModel;
 const Product = productModel;
+
+//image delete 
+const Image = imageModel;
+const s3 = require("../utils/s3.util");
+
 
 const setErrorResponse = (error, response, status) => {
     response.status(status);
@@ -88,21 +93,21 @@ exports.createProduct = async (request, response) => {
 
 
 
-        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
-        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
+        if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+            Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
 
 
-        if(request.body.quantity){
-            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+        if (request.body.quantity) {
+            if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
 
         }
-       
+
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
@@ -110,14 +115,14 @@ exports.createProduct = async (request, response) => {
                 { message: 'You must enter the quantity between 0 and 100' }, response, 400);
         }
 
-        
 
-        if (!request.body.name || !request.body.description || !request.body.sku || !request.body.manufacturer || request.body.quantity==undefined) {
+
+        if (!request.body.name || !request.body.description || !request.body.sku || !request.body.manufacturer || request.body.quantity == undefined) {
 
             return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
 
         }
-    
+
         //validation for sku duplicate should not be allowed
         const getProduct = await Product.findOne({
             where: {
@@ -149,7 +154,7 @@ exports.createProduct = async (request, response) => {
 
         const productData = {
             id: productRes.id,
-            name: productRes.name,  
+            name: productRes.name,
             description: productRes.description,
             sku: productRes.sku,
             manufacturer: productRes.manufacturer,
@@ -165,7 +170,7 @@ exports.createProduct = async (request, response) => {
 
     catch (error) {
 
-       setErrorResponse(error, response, 400);
+        setErrorResponse(error, response, 400);
     }
 
 }
@@ -203,7 +208,7 @@ exports.getProductById = async (req, res) => {
         return res.status(400).json({
             message: 'Please enter the id in number/integer format in the url'
         })
-       
+
     }
 
 }
@@ -213,6 +218,34 @@ exports.deleteById = async (req, res) => {
 
     try {
 
+        //new code start for image
+        const productObject = await Product.findOne({
+            where: { id: req.params.id }
+        })
+
+        if (productObject) {
+            const imageObjects = await Image.findAll({
+                where: { product_id: req.params.id }
+            })
+
+            if (!imageObjects.length == 0) {
+                const result = await s3.bulkDelete(imageObjects);
+
+                if (result) {
+
+                    for (var i in imageObjects) {
+                      await Image.destroy({
+                        where: { product_id:imageObjects[i].product_id }
+                    });
+                    } 
+                }
+            }
+
+
+        }
+
+        //above is the new code
+        //product id
         const id = req.params.id;
         const productValue = await Product.destroy({
             where: { id }
@@ -276,22 +309,22 @@ exports.updateProductById = async (request, response) => {
 
 
         if (!request.body.name || !request.body.description || !request.body.sku ||
-            !request.body.manufacturer || request.body.quantity==undefined
+            !request.body.manufacturer || request.body.quantity == undefined
         ) {
             return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
         }
 
         //rishab
-        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
-        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
+        if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+            Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
 
 
 
-        if(request.body.quantity){
-            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+        if (request.body.quantity) {
+            if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
@@ -319,7 +352,7 @@ exports.updateProductById = async (request, response) => {
         }
 
 
-        
+
         if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
             || request.body.date_added) {
 
@@ -424,16 +457,15 @@ exports.patchProductById = async (request, response) => {
 
 
 
-        if(request.body.name === null || request.body.manufacturer === null || request.body.description === null 
-            || request.body.sku === null || request.body.quantity === null)
-        {
+        if (request.body.name === null || request.body.manufacturer === null || request.body.description === null
+            || request.body.sku === null || request.body.quantity === null) {
             return setErrorResponse(
                 { message: 'You cannot enter null for these fields : name, description, sku, quantity and manufacturer' }, response, 400);
         }
 
-        
-        if(Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
-        Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)){
+
+        if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
+            Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
@@ -441,8 +473,8 @@ exports.patchProductById = async (request, response) => {
 
 
 
-        if(request.body.quantity){
-            if (typeof (request.body.quantity) == 'string'   ||  !Number.isInteger(request.body.quantity)) {
+        if (request.body.quantity) {
+            if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
@@ -450,7 +482,7 @@ exports.patchProductById = async (request, response) => {
         }
 
 
-       // quantity's validation for range
+        // quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
             return setErrorResponse(
                 { message: 'You must enter the quantity between 0 and 100' }, response, 400);
@@ -498,7 +530,7 @@ exports.patchProductById = async (request, response) => {
 
 
     } catch (error) {
-       
+
         setErrorResponse(error, response, 400);
     }
 

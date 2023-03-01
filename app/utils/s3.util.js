@@ -55,7 +55,36 @@ function fileExistsS3(filename) {
 
 }
 
-module.exports = { uploadFile, deleteFile, fileExistsS3 };
+//bulk delete
+function bulkDelete(filenames) {
+
+
+  var objects = [];
+  for (var file in filenames) {
+    objects.push({ Key: filenames[file].s3_bucket_path });
+  }
+
+  const bulkDeleteParams = {
+
+    Bucket: process.env.AWS_BUCKET_NAME,
+    Delete: {
+      Objects: objects
+    },
+
+  };
+
+  try {
+    return s3.deleteObjects(bulkDeleteParams).promise();
+    console.log("Files deleted in S3")
+  } catch (err) {
+    console.log("Some ERROR : " + err.code)
+  }
+
+}
+
+
+
+module.exports = { uploadFile, deleteFile, fileExistsS3, bulkDelete };
 
 
 
