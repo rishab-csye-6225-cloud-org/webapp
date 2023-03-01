@@ -219,11 +219,11 @@ exports.deleteById = async (req, res) => {
     try {
 
         //new code start for image
-        const productObject = await Product.findOne({
-            where: { id: req.params.id }
-        })
+        // const productObject = await Product.findOne({
+        //     where: { id: req.params.id }
+        // })
 
-        if (productObject) {
+        if (req.product) {
             const imageObjects = await Image.findAll({
                 where: { product_id: req.params.id }
             })
@@ -240,12 +240,10 @@ exports.deleteById = async (req, res) => {
                     } 
                 }
             }
-
-
         }
 
         //above is the new code
-        //product id
+        //product id this method will delete the entire product even if there is no image present 
         const id = req.params.id;
         const productValue = await Product.destroy({
             where: { id }

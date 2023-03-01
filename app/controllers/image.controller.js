@@ -113,15 +113,13 @@ exports.deleteImageById = async (request, response) => {
             })
         }
 
-        // Check if image exists in s3
-        //const fileName = image.s3_bucket_path.split('/').slice(-3).join('/');;
-        
-        const exists = await s3.fileExistsS3(image.s3_bucket_path);
-        if (!exists) {
-            return response.status(404).json({
-                message: 'Image not found! Please try with a different id',
-            });
-        }
+        // Check if image exists in s3        
+        //const exists = await s3.fileExistsS3(image.s3_bucket_path);
+        // if (!exists) {
+        //     return response.status(404).json({
+        //         message: 'Image not found! Please try with a different id',
+        //     });
+        // }
 
         if (image) {
             //trying to get the url last three 
@@ -162,15 +160,13 @@ exports.getImageById = async (request, response) => {
                 })
             }
 
-              //if s3 mai exits karta ye check 
-        //const fileName = imageVal.s3_bucket_path.split('/').slice(-3).join('/');;
-        const exists = await s3.fileExistsS3(imageVal.s3_bucket_path);
-        //const exists = await s3.fileExistsS3(fileName);
-        if (!exists) {
-            return response.status(404).json({
-                message: 'Image not found! Please try with a different id',
-            });
-        }
+        // const exists = await s3.fileExistsS3(imageVal.s3_bucket_path);
+
+        // if (!exists) {
+        //     return response.status(404).json({
+        //         message: 'Image not found! Please try with a different id',
+        //     });
+        // }
         }
       
         const imageValue = await Image.findOne({

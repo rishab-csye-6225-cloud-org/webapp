@@ -66,6 +66,7 @@ const productAuth = async (req, res, next) => {
                         message: 'Forbidden request as user is trying to access a resource which he did not create it'
                     })
                 }
+                req.product = productVal;
             } else {
                 return res.status(404).json({
                     message: 'Product not found! Please try with a different product id'
@@ -111,7 +112,7 @@ const productAuth = async (req, res, next) => {
     //     })
     // }
     
-
+    
     //success and the other call to the next callback function
     next();
 
