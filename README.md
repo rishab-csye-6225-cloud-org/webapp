@@ -124,4 +124,16 @@ Above, I am passing a variables file inorder to make some parameters dynamic bas
 8. Using github secrets for credentials 
 9. Also, applied a workflow for when the code is merged
 10. Wrote a shell script that the packer will use to provision the configuration on the ami machine
-11. Also, wrote the terrafome for setting up the infrastructure wherein my AMI would run automatically with the help of ami and systemd configuration 
+
+11. Also, wrote the terrafome for setting up the infrastructure wherein my AMI would run automatically with the help of ami and systemd configuration
+
+# Assignment 5
+
+## The assignment was to build REST Api for Image of the product related to the user that created that particular product. Had to incorporate S3 inorder to store images to the s3 bucket as the object.
+
+## We need to use Terraform inorder to build the Infrastructure which involves creating the entire network involving vpc, subnets, ec2 instance, attach security groups to the instance  through terraform and also need to take take of the RDS instance and create IAM Policy and create a role inorder to attach it to the EC2 instance
+
+
+## Steps followed for the assignment 5 were as follows:
+1. 
+

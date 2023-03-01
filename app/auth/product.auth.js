@@ -1,8 +1,12 @@
-const { productModel, userModel } = require("../models/index.js");
+const { productModel, userModel, imageModel } = require("../models/index.js");
 const bcrypt = require("bcrypt");
 const product = require("../models/product.js");
 const Product = productModel;
 const User = userModel;
+
+//image
+const image= require("../models/image.js");
+const Image = imageModel;
 
 const productAuth = async (req, res, next) => {
 
@@ -48,7 +52,6 @@ const productAuth = async (req, res, next) => {
         })
     }
 
-
     try {
 
         if (parseInt(req.params.id)) {
@@ -63,6 +66,7 @@ const productAuth = async (req, res, next) => {
                         message: 'Forbidden request as user is trying to access a resource which he did not create it'
                     })
                 }
+                req.product = productVal;
             } else {
                 return res.status(404).json({
                     message: 'Product not found! Please try with a different product id'
@@ -80,31 +84,35 @@ const productAuth = async (req, res, next) => {
         })
     }
 
-
-    //sku ka validation
-    // const skuCheck = await Product.findOne({
-    //     where: { sku: req.body.sku }
-    // })
-
-
-    // if(req.method == "PUT"){
-    //     if(parseInt(req.params.id) != skuCheck.id)
+    //code for image authentication
+    // try{
+    //     if(parseInt(req.params.image_id))
     //     {
+    //         const imageVal = await Image.findOne({
+    //             where: { image_id: req.params.image_id }
+    //         })
+    
+    
+    //         if(imageVal)
+    //         {
+    //             if (imageVal.product_id != req.params.id) {
+    //                 return res.status(403).json({
+    //                     message: 'Forbidden request'
+    //                 })
+    //             }
+    //         }
+    //     }else{
     //         return res.status(400).json({
-    //             message: 'Please enter a different sku as it already present in the db'
+    //             message: 'Please enter the id in number/integer format in the url'
     //         })
     //     }
-
-    // }
-    //sku ka validation end
-
-
-    // }else{
+    // }catch (err) {
     //     return res.status(400).json({
     //         message: 'Please enter the id in number/integer format in the url'
     //     })
     // }
-
+    
+    
     //success and the other call to the next callback function
     next();
 
