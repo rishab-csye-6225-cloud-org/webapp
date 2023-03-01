@@ -4,12 +4,7 @@ Documentation=https://github.com/rishabNeu
 After=network.target
 
 [Service]
-Environment=DB_HOSTNAME=localhost
-Environment=DB_PASSWORD=Rishab16
-Environment=DB_USER=postgres
-Environment=DB_NAME=postgres
-Environment=DB_PORT=5432
-Environment=APP_PORT=9000
+EnvironmentFile=/home/ec2-user/webapp/.env
 
 Type=simple
 User=ec2-user
