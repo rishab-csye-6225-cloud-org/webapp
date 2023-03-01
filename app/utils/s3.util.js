@@ -1,5 +1,6 @@
 const multer = require('multer')
 const S3 = require('aws-sdk/clients/s3')
+
 require("dotenv/config")
 const fs = require("fs");
 const {
@@ -8,12 +9,15 @@ const {
 } = require('uuid');
 
 
-// Now creating the S3 instance which will be used in uploading photo to s3 bucket.
-const s3 = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_KEY
-})
 
+// Now creating the S3 instance which will be used in uploading photo to s3 bucket.
+// const s3 = new S3({
+//   accessKeyId: process.env.AWS_ACCESS_KEY,
+//   secretAccessKey: process.env.AWS_SECRET_KEY
+// },
+// )
+
+const s3 = new S3();
 
 // UPLOAD FILE TO S3*
 function uploadFile(file, userId) {
