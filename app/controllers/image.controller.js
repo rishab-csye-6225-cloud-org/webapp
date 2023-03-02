@@ -67,7 +67,6 @@ exports.uploadImage = async (request, response) => {
 
         if (result) {
             const image = Image.build({
-                //s3_bucket_path: result.Location,
                 s3_bucket_path: result.Key,
                 product_id: request.params.id,
                 file_name: request.file.originalname,

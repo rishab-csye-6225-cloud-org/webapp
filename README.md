@@ -1,4 +1,4 @@
-# Assignment 4
+# Assignment 1
 
 ## Name = Rishab Rajesh Agarwal
 
@@ -134,6 +134,25 @@ Above, I am passing a variables file inorder to make some parameters dynamic bas
 ## We need to use Terraform inorder to build the Infrastructure which involves creating the entire network involving vpc, subnets, ec2 instance, attach security groups to the instance  through terraform and also need to take take of the RDS instance and create IAM Policy and create a role inorder to attach it to the EC2 instance
 
 
-## Steps followed for the assignment 5 were as follows:
-1. 
+## Commands I used when developing this assignment
+1. Packer init for initializing the packer  
+ - packer init
 
+2. Packer validate -> inorder to validate the syntax of the written file
+ - packer validate --var-file=file.pkrvars.hcl ./
+
+3. Packer build -> to build the packer file 
+ - packer build --var-file=file.pkrvars.hcl ./
+
+Above, I am passing a variables file inorder to make some parameters dynamic based on region
+
+## Steps followed for the assignment 5 were as follows:
+1. Created rest apis for images that were tied to product and the user.
+2. Used aws-sdk inorder to connect to s3 and do all the necessary transactions.
+3. Used multer as a middleware to upload files to express server
+4. After the development, wrote terraform code to setup RDS, created policies IAM, Role for Ec2 and also other configurations.
+5. Also used systemd to auto up my application even if reboot.
+6. Launched/deployed the infrastructure with the application created
+7. Tested the application on the deployed ec2 server using the RDS and S3.
+8. Also, wrote user data script inorder to setup the ec2 server.
+9. Used packer for building the AMI by making some changes in the previous packer file.
