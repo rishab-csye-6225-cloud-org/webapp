@@ -197,11 +197,11 @@ exports.getAllImages = async (request, response) => {
                 where: { product_id: id }
             })
 
-            if (!imageVal) {
-                return response.status(404).json({
-                    message: 'Image not found! Please try with a different id'
-                })
-            }
+            // if (!imageVal) {
+            //     return response.status(404).json({
+            //         message: 'Image not found! Please try with a different id'
+            //     })
+            // }
         }
 
         const imageValue = await Image.findAll({
