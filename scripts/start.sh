@@ -8,7 +8,8 @@ sudo yum install -y gcc-c++ make
 curl -sL https://rpm.nodesource.com/setup_16.x | sudo -E bash -
 sudo yum install -y nodejs
 node -v
-
+sudo amazon-linux-extras enable postgresql14
+sudo yum clean metadata && sudo yum install postgresql -y
 ls
 mkdir webapp
 
