@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const cors  = require("cors");
-
+const logger = require("./app/utils/logger.js");
 const app = express();
 const userRoutes = require('./app/routes/user.routes.js');
 
@@ -33,6 +33,7 @@ app.get("/" ,  (req,res)=>{
 
 app.get("/healthz" , (req,res) =>{
     try{
+        logger.info("Requested healthz point");
         return res.status(200).send();
     }catch(err){
         return res.status(400).json(err); 
