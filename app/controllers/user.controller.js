@@ -1,7 +1,7 @@
 const db = require("../models");
 const { userModel,productModel } = require("../models/index.js");
 const bcrypt = require("bcrypt")
-
+const logger = require("../utils/logger.js");
 const User = userModel;
 
 const Product = productModel;
@@ -24,25 +24,23 @@ exports.create = async (request, response) => {
 
 
     try {
-        console.log("in controller");
 
-        //validation s
-
-
+        logger.info("Post request for user: v1/user");
+    
         if ("username" in request.body) {
-
+           
             if (request.body.username === "") {
+                logger.error("username was empty");
                 return setErrorResponse(
                     { message: 'You cannot keep username field empty!!' }, response, 400);
-
             }
-
         }
 
 
         if ("first_name" in request.body) {
 
             if (request.body.first_name === "") {
+                logger.error("first_name was empty");
                 return setErrorResponse(
                     { message: 'You cannot keep first_name field empty!!' }, response, 400);
 
@@ -53,6 +51,7 @@ exports.create = async (request, response) => {
         if ("last_name" in request.body) {
 
             if (request.body.last_name === "") {
+                logger.error("last_name was empty");
                 return setErrorResponse(
                     { message: 'You cannot keep last_name field empty!!' }, response, 400);
 
@@ -63,6 +62,7 @@ exports.create = async (request, response) => {
         if ("password" in request.body) {
 
             if (request.body.password === "") {
+                logger.error("password was empty");
                 return setErrorResponse(
                     { message: 'You cannot keep password field empty!!' }, response, 400);
 
@@ -75,7 +75,7 @@ exports.create = async (request, response) => {
         const emailValidation =
             /^[a-zA-Z0-9.!#$%&'+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)$/
         if (!emailValidation.test(request.body.username)) {
-
+            logger.error("Invalid email id for user");
             return setErrorResponse({ message: 'Enter your Email ID in correct format. Example: something@xyz.com' },
                 response, 400);
 
@@ -83,7 +83,7 @@ exports.create = async (request, response) => {
 
 
         if (request.body.id) {
-
+            logger.error("Invalid request");
             return setErrorResponse({ message: 'Invalid request for user object: ID should not be provided' },
                 response, 400);
         }
@@ -93,13 +93,14 @@ exports.create = async (request, response) => {
         if (!request.body.username || !request.body.password || !request.body.first_name ||
             !request.body.last_name
         ) {
-
+            logger.error("Required fields are not present in the request body");
             return setErrorResponse({ message: 'username, password, first_name, and last_name are required fields' }, response, 400)
 
         }
 
 
         if (request.body.password.length < 5 || request.body.password.length > 15) {
+            logger.error("Password length problem");
             return setErrorResponse({ message: 'Password length should be between 5 and 15' }, response, 400);
 
         }
@@ -109,15 +110,18 @@ exports.create = async (request, response) => {
                 username: request.body.username,
             },
         }).catch((err) => {
+            
             return setErrorResponse({
                 message: err.message || 'Some error occurred while creating the user',
             }, response, 400)
         })
         if (getUser) {
+            logger.error("username already present");
             return setErrorResponse({ message: 'User with same username/email already present!! Please enter different email address' }, response, 400)
         } else {
 
             //hashing the password
+            logger.info("Bcrypting the password");
             const salt = await bcrypt.genSalt(10);
             const hashedPassword = await bcrypt.hash(request.body.password, salt)
 
@@ -142,7 +146,7 @@ exports.create = async (request, response) => {
                 account_created: userRes.account_created,
                 account_updated: userRes.account_updated
             }
-
+            logger.info("User created successfully");
             setSuccessResponse(userData, response, 201);
 
         }
@@ -150,6 +154,7 @@ exports.create = async (request, response) => {
 
     //validation e
     catch (error) {
+        logger.error("Invalid request body");
         setErrorResponse(error, response, 400);
     }
 
@@ -159,6 +164,8 @@ exports.create = async (request, response) => {
 exports.getById = async (req, res) => {
 
     try {
+
+        logger.info("Get request for user: v1/user");
 
         const id = req.params.id;
         const value = await User.findOne({
@@ -172,7 +179,7 @@ exports.getById = async (req, res) => {
 
 
     } catch (error) {
-
+        logger.error("Invalid request body");
         setErrorResponse(error, res, 401);
     }
 
@@ -180,6 +187,8 @@ exports.getById = async (req, res) => {
 
 exports.updateById = async (req, res) => {
     try {
+
+        logger.info("Put request for user: v1/user/:id");
 
         const id = req.params.id;
 
@@ -368,6 +377,7 @@ exports.updateById = async (req, res) => {
         setSuccessResponse(val, res, 204);
 
     } catch (error) {
+        logger.error("Invalid request body");
         setErrorResponse(error, res, 400);
     }
 }

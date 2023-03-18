@@ -33,6 +33,24 @@ echo "In webapp folder"
 npm i
 npm test
 
+#adding cloudwatch configuration
+echo "CloudWatch Agent downloading..."
+cd ..
+ls 
+wget https://s3.amazonaws.com/amazoncloudwatch-agent/amazon_linux/amd64/latest/amazon-cloudwatch-agent.rpm
+
+sudo rpm -U ./amazon-cloudwatch-agent.rpm
+sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl \
+    -a fetch-config \
+    -m ec2 \
+    -c file:/home/ec2-user/webapp/cloudwatch-config.json \
+    -s
+
+
+
+
+
+
 
 
 
