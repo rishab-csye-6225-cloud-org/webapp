@@ -6,7 +6,7 @@ const Product = productModel;
 const Image = imageModel;
 const s3 = require("../utils/s3.util");
 const product = require("../models/product");
-
+const logger = require("../utils/logger.js");
 const fs = require('fs')
 const { promisify } = require('util')
 
@@ -27,9 +27,9 @@ const setSuccessResponse = (obj, response, status) => {
 exports.uploadImage = async (request, response) => {
 
     console.log(request.file)
-    console.log("in upload image controller");
 
     try {
+        logger.info("Upload request for image: v1/product/:id/image");
 
         if(request.file===undefined)
         {
@@ -37,16 +37,6 @@ exports.uploadImage = async (request, response) => {
                 message: 'File is not uploaded. Please upload one!'
             })
         }
-
-        //const fileType = request.file.mimetype.split('/').pop();
-
-
-        // if(fileType!=='jpeg' && fileType!=='png')
-        // {
-        //     return response.status(400).json({
-        //         message: 'Given file type not supported!'
-        //     })
-        // }
 
         const file = request.file;
 
@@ -82,11 +72,13 @@ exports.uploadImage = async (request, response) => {
                 date_created: imageRes.date_created,
                 s3_bucket_path: imageRes.s3_bucket_path
             }
+            logger.info("Image uploaded successfully");
 
             setSuccessResponse(imageData, response, 201);
         }
 
     } catch (error) {
+        logger.error("Something went wrong with the request");
         setErrorResponse(error, response, 400);
     }
 
@@ -97,6 +89,8 @@ exports.uploadImage = async (request, response) => {
 exports.deleteImageById = async (request, response) => {
 
     try {
+        logger.info("Delete request for image: v1/product/:id/image/:id");
+
         const id = request.params.image_id;
 
         const image = await Image.findOne({
@@ -112,30 +106,20 @@ exports.deleteImageById = async (request, response) => {
             })
         }
 
-        // Check if image exists in s3        
-        //const exists = await s3.fileExistsS3(image.s3_bucket_path);
-        // if (!exists) {
-        //     return response.status(404).json({
-        //         message: 'Image not found! Please try with a different id',
-        //     });
-        // }
 
         if (image) {
-            //trying to get the url last three 
-            //const lastThreeSegments = image.s3_bucket_path.split('/').slice(-3).join('/');
-
             const result = await s3.deleteFile(image.s3_bucket_path);
 
             if (result) {
                 const imageValue = await Image.destroy({
                     where: { image_id: id }
                 });
-
+                logger.info("Image deleted successfully");
                 setSuccessResponse(imageValue, response, 204);
             }
         }
     } catch (error) {
-
+        logger.error("Something went wrong with the request");
         setErrorResponse(error, response, 400);
     }
 
@@ -144,6 +128,7 @@ exports.deleteImageById = async (request, response) => {
 //get image based on the image id (single image will be retrieved)
 exports.getImageById = async (request, response) => {
     try {
+        logger.info("Get request for image: v1/product/:id/image/:id");
 
         const id = request.params.image_id;
 
@@ -158,25 +143,18 @@ exports.getImageById = async (request, response) => {
                     message: 'Image not found! Please try with a different image id'
                 })
             }
-
-        // const exists = await s3.fileExistsS3(imageVal.s3_bucket_path);
-
-        // if (!exists) {
-        //     return response.status(404).json({
-        //         message: 'Image not found! Please try with a different id',
-        //     });
-        // }
         }
       
         const imageValue = await Image.findOne({
             where: { image_id: id }
         })
+        logger.info("Image fetched successfully");
 
         setSuccessResponse(imageValue, response, 200);
 
 
     } catch (error) {
-
+        logger.error("Something went wrong with the request");
         return response.status(400).json({
             message: 'Please enter the id in number/integer format in the url'
         })
@@ -188,6 +166,7 @@ exports.getImageById = async (request, response) => {
 exports.getAllImages = async (request, response) => {
 
     try {
+        logger.info("Get request for all images: v1/product/:id/image");
 
         const id = request.params.id;
 
@@ -195,22 +174,17 @@ exports.getAllImages = async (request, response) => {
             const imageVal = await Image.findOne({
                 where: { product_id: id }
             })
-
-            // if (!imageVal) {
-            //     return response.status(404).json({
-            //         message: 'Image not found! Please try with a different id'
-            //     })
-            // }
         }
 
         const imageValue = await Image.findAll({
             where: { product_id: id }
         })
-
+        logger.info("All Images fetched successfully");
         setSuccessResponse(imageValue, response, 200);
 
 
     } catch (error) {
+        logger.error("Something went wrong with the request");
 
         return response.status(400).json({
             message: 'Please enter the id in number/integer format in the url'

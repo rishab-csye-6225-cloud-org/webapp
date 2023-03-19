@@ -2,7 +2,7 @@ const db = require("../models");
 const { userModel, productModel, imageModel } = require("../models/index.js");
 
 const bcrypt = require("bcrypt")
-
+const logger = require("../utils/logger.js");
 const User = userModel;
 const Product = productModel;
 
@@ -27,8 +27,9 @@ exports.createProduct = async (request, response) => {
 
 
     try {
-        console.log("in product controller");
-        //validation s
+
+        logger.info("Post request for product: v1/product");
+
         if ("name" in request.body) {
 
             if (request.body.name === "") {
@@ -134,6 +135,7 @@ exports.createProduct = async (request, response) => {
             }, response, 400)
         })
         if (getProduct) {
+            logger.error("Same sku already present.");
             return setErrorResponse({ message: 'Product with same sku already exist. Please enter a different id' }, response, 400)
         }
 
@@ -164,12 +166,13 @@ exports.createProduct = async (request, response) => {
             owner_user_id: productRes.owner_user_id
         }
 
+        logger.info("Product created successfully!");
         setSuccessResponse(productData, response, 201);
 
     }
 
     catch (error) {
-
+        logger.error("Invalid body for product");
         setErrorResponse(error, response, 400);
     }
 
@@ -179,7 +182,7 @@ exports.createProduct = async (request, response) => {
 exports.getProductById = async (req, res) => {
 
     try {
-
+        logger.info("Get request for product: v1/product/:id");
         const id = req.params.id;
 
         //404 NOT FOUND IF BAD ID   
@@ -199,12 +202,12 @@ exports.getProductById = async (req, res) => {
         const productValue = await Product.findOne({
             where: { id }
         })
-
+        logger.info("Product fetched successfully!");
         setSuccessResponse(productValue, res, 200);
 
 
     } catch (error) {
-
+        logger.error("Something went wrong with the request");
         return res.status(400).json({
             message: 'Please enter the id in number/integer format in the url'
         })
@@ -222,7 +225,7 @@ exports.deleteById = async (req, res) => {
         // const productObject = await Product.findOne({
         //     where: { id: req.params.id }
         // })
-
+        logger.info("Delete request for product: v1/product/:id");
         if (req.product) {
             const imageObjects = await Image.findAll({
                 where: { product_id: req.params.id }
@@ -248,12 +251,12 @@ exports.deleteById = async (req, res) => {
         const productValue = await Product.destroy({
             where: { id }
         });
-
+        logger.info("Product deleted successfully!");
         setSuccessResponse(productValue, res, 204);
 
 
     } catch (error) {
-
+        logger.error("Something went wrong with the request");
         setErrorResponse(error, res, 400);
     }
 
@@ -264,6 +267,7 @@ exports.deleteById = async (req, res) => {
 exports.updateProductById = async (request, response) => {
 
     try {
+        logger.info("Put request for product: v1/product/:id");
 
         const id = request.params.id;
 
@@ -386,8 +390,10 @@ exports.updateProductById = async (request, response) => {
                 response, 400
             );
         }
+        logger.info("Product updated successfully!");
         return setSuccessResponse(val, response, 204);
     } catch (error) {
+        logger.error("Something went wrong with the request/body");
         setErrorResponse(error, response, 400);
     }
 }
@@ -397,6 +403,8 @@ exports.updateProductById = async (request, response) => {
 exports.patchProductById = async (request, response) => {
 
     try {
+        logger.info("Patch request for product: v1/product/:id");
+
         const id = request.params.id;
 
         //validation
@@ -523,12 +531,12 @@ exports.patchProductById = async (request, response) => {
                 response, 400
             );
         }
-
+        logger.info("Product patched successfully!");
         return setSuccessResponse(val, response, 204);
 
 
     } catch (error) {
-
+        logger.error("Something went wrong with the request/body");
         setErrorResponse(error, response, 400);
     }
 
