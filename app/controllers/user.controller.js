@@ -5,10 +5,10 @@ const logger = require("../utils/logger.js");
 const User = userModel;
 
 //statsd client import
-// var StatsD = require('node-statsd'),
-//       client = new StatsD({host: 'localhost', port: 8124});
 var StatsD = require('node-statsd'),
-      client = new StatsD();
+      client = new StatsD({host: 'localhost', port: 8125});
+// var StatsD = require('node-statsd'),
+//       client = new StatsD();
 
 
 const Product = productModel;
