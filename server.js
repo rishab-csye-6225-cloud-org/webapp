@@ -3,7 +3,7 @@ const config = require("./app/config/config.js");
 
 const db = require("./app/models");
 
-
+const logger = require("./app/utils/logger.js");
 
 db.sequelize.query("CREATE SCHEMA IF NOT EXISTS public;").then();
 
@@ -13,6 +13,7 @@ db.sequelize.sync({alter:true});
 
 const PORT = config.APP_PORT || 9001 ;
 
+logger.info("server is running on port :" + PORT);
 
 app.listen(PORT, ()=>{
     console.log(`server running on port ${PORT}` );

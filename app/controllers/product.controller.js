@@ -141,7 +141,7 @@ exports.createProduct = async (request, response) => {
 
         const ownerIdOfProduct = request.user.id;
 
-
+        logger.info("Product object built to save");
         const product = Product.build({
             name: request.body.name,
             description: request.body.description,
@@ -199,6 +199,7 @@ exports.getProductById = async (req, res) => {
         }
         //
 
+        logger.info("Product fetching...");
         const productValue = await Product.findOne({
             where: { id }
         })

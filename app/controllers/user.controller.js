@@ -4,6 +4,11 @@ const bcrypt = require("bcrypt")
 const logger = require("../utils/logger.js");
 const User = userModel;
 
+//statsd client import
+var StatsD = require('node-statsd'),
+      client = new StatsD();
+
+
 const Product = productModel;
 
 const Op = db.Sequelize.Op;
@@ -26,7 +31,7 @@ exports.create = async (request, response) => {
     try {
 
         logger.info("Post request for user: v1/user");
-    
+        client.increment('v1/user : post request - user');
         if ("username" in request.body) {
            
             if (request.body.username === "") {
@@ -167,6 +172,7 @@ exports.getById = async (req, res) => {
 
         logger.info("Get request for user: v1/user");
 
+        client.increment('v1/user : get request - user');
         const id = req.params.id;
         const value = await User.findOne({
             where: { id },
@@ -175,6 +181,7 @@ exports.getById = async (req, res) => {
             }
         })
 
+        logger.info("User fetched successfully!");
         setSuccessResponse(value, res, 200);
 
 
@@ -190,6 +197,7 @@ exports.updateById = async (req, res) => {
 
         logger.info("Put request for user: v1/user/:id");
 
+        client.increment('v1/user/:id : put request - user');
         const id = req.params.id;
 
 
@@ -373,7 +381,7 @@ exports.updateById = async (req, res) => {
                 res, 400
             );
         }
-
+        logger.info("User updated successfully!");
         setSuccessResponse(val, res, 204);
 
     } catch (error) {

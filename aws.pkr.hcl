@@ -89,6 +89,7 @@ build {
     ]
     scripts = [
       "scripts/start.sh",
+      "scripts/cloudwatch.sh",
       "scripts/systemd.sh"
     ]
     

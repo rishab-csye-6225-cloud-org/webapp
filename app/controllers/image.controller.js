@@ -27,12 +27,14 @@ const setSuccessResponse = (obj, response, status) => {
 exports.uploadImage = async (request, response) => {
 
     console.log(request.file)
+    logger.info("Image file which is to be uploaded : " + request.file);
 
     try {
         logger.info("Upload request for image: v1/product/:id/image");
 
         if(request.file===undefined)
         {
+            logger.error("No file selected to upload");
             return response.status(400).json({
                 message: 'File is not uploaded. Please upload one!'
             })
@@ -42,12 +44,13 @@ exports.uploadImage = async (request, response) => {
 
         if(!file.mimetype.includes("image/"))
         {
+            logger.error("File format selected is not supported");
             return response.status(400).json({
                          message: 'Given file type not supported!'
                 })
         }
 
-
+        logger.info("Uploading file to S3!");
         const result = await s3.uploadFile(request.file, request.user.id);
 
         //unlink from uploads
@@ -63,6 +66,7 @@ exports.uploadImage = async (request, response) => {
                 date_created: new Date()
             });
 
+            logger.info("Image data saved to database");
             const imageRes = await image.save();
 
             const imageData = {
@@ -83,7 +87,6 @@ exports.uploadImage = async (request, response) => {
     }
 
 }
-
 
 
 exports.deleteImageById = async (request, response) => {
