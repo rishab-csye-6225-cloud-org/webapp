@@ -32,9 +32,10 @@ app.get("/" ,  (req,res)=>{
 
 app.get("/healthz" , (req,res) =>{
     try{
-        logger.info("Requested healthz point");
+        logger.info("Requested healthz point : /healthz");
         return res.status(200).send();
     }catch(err){
+        logger.error("Something went wrong -> healthz point : /healthz");
         return res.status(400).json(err); 
     }
     

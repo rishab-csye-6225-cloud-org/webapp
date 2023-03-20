@@ -7,6 +7,7 @@ const logger = winston.createLogger({
         new winston.transports.File({
             filename: "logs/csye6225.log",
           }),
+          new winston.transports.Console()
         ],
 })
 
