@@ -6,7 +6,7 @@ const User = userModel;
 
 //statsd client import
 var StatsD = require('node-statsd'),
-      client = new StatsD();
+      client = new StatsD({host: 'localhost', port: 8124});
 
 
 const Product = productModel;
