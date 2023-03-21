@@ -35,7 +35,7 @@ exports.create = async (request, response) => {
     try {
 
         logger.info("Post request for user: v1/user");
-        client.increment('v1/user : post request - user');
+        client.increment('v1/user.post.request.user');
         if ("username" in request.body) {
            
             if (request.body.username === "") {
@@ -176,7 +176,7 @@ exports.getById = async (req, res) => {
 
         logger.info("Get request for user: v1/user");
 
-        client.increment('v1/user : get request - user');
+        client.increment('user.get.request.user');
         const id = req.params.id;
         const value = await User.findOne({
             where: { id },
@@ -201,7 +201,7 @@ exports.updateById = async (req, res) => {
 
         logger.info("Put request for user: v1/user/:id");
 
-        client.increment('v1/user/:id : put request - user');
+        client.increment('user.put.request.user');
         const id = req.params.id;
 
 
