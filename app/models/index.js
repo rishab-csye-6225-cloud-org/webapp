@@ -1,11 +1,13 @@
 const config = require("../config/config.js");
 
 const Sequelize = require("sequelize");
+const logger = require('../utils/logger.js');
 
 const sequelize = new Sequelize(config.DB, config.USER, config.PASSWORD, {
     host: config.HOST,
     port: config.PORT,
     dialect: config.DIALECT,
+    logging: (message)=>{ logger.info(message)},
     operatorAliases: false,
 
 });

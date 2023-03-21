@@ -4,7 +4,7 @@ const express = require("express");
 const bodyParser = require("body-parser");
 
 const cors  = require("cors");
-
+const logger = require("./app/utils/logger.js");
 const app = express();
 const userRoutes = require('./app/routes/user.routes.js');
 
@@ -16,7 +16,6 @@ const imageRoutes = require('./app/routes/image.routes.js');
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended:true}));
-
 
 app.use("/v1" , productRoutes);
 
@@ -33,8 +32,10 @@ app.get("/" ,  (req,res)=>{
 
 app.get("/healthz" , (req,res) =>{
     try{
+        logger.info("Requested healthz point : /healthz");
         return res.status(200).send();
     }catch(err){
+        logger.error("Something went wrong -> healthz point : /healthz");
         return res.status(400).json(err); 
     }
     

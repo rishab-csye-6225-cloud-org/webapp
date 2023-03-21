@@ -5,6 +5,7 @@ After=network.target
 
 [Service]
 EnvironmentFile=/home/ec2-user/webapp/.env
+WorkingDirectory=/home/ec2-user/webapp/
 
 Type=simple
 User=ec2-user
