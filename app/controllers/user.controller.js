@@ -10,8 +10,10 @@ const User = userModel;
 // var StatsD = require('node-statsd'),
 //       client = new StatsD();
 
-var Client = require('node-statsd');
-const client = new Client("localhost", 8125);
+// var Client = require('node-statsd');
+// const client = new Client("localhost", 8125);
+
+const client = require("../utils/statsd.js");
 
 const Product = productModel;
 
@@ -35,7 +37,7 @@ exports.create = async (request, response) => {
     try {
 
         logger.info("Post request for user: v1/user");
-        client.increment('v1/user.post.request.user');
+        client.increment('post.user.create');
         if ("username" in request.body) {
            
             if (request.body.username === "") {
@@ -176,7 +178,7 @@ exports.getById = async (req, res) => {
 
         logger.info("Get request for user: v1/user");
 
-        client.increment('user.get.request.user');
+        client.increment('get.user.fetch.id');
         const id = req.params.id;
         const value = await User.findOne({
             where: { id },
@@ -201,7 +203,7 @@ exports.updateById = async (req, res) => {
 
         logger.info("Put request for user: v1/user/:id");
 
-        client.increment('user.put.request.user');
+        client.increment('put.user.update');
         const id = req.params.id;
 
 

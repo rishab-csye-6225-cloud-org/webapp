@@ -5,7 +5,7 @@ const bcrypt = require("bcrypt")
 const logger = require("../utils/logger.js");
 const User = userModel;
 const Product = productModel;
-
+const client = require("../utils/statsd.js");
 //image delete 
 const Image = imageModel;
 const s3 = require("../utils/s3.util");
@@ -29,8 +29,8 @@ exports.createProduct = async (request, response) => {
     try {
 
         logger.info("Post request for product: v1/product");
-
-        if ("name" in request.body) {
+        client.increment('post.product.create');
+        if ("name" in request.body) {   
 
             if (request.body.name === "") {
                 return setErrorResponse(
@@ -184,7 +184,7 @@ exports.getProductById = async (req, res) => {
     try {
         logger.info("Get request for product: v1/product/:id");
         const id = req.params.id;
-
+        client.increment('get.product.fetch.id');
         //404 NOT FOUND IF BAD ID   
         if (parseInt(id)) {
             const productVal = await Product.findOne({
@@ -227,6 +227,7 @@ exports.deleteById = async (req, res) => {
         //     where: { id: req.params.id }
         // })
         logger.info("Delete request for product: v1/product/:id");
+        client.increment('delete.product.id');
         if (req.product) {
             const imageObjects = await Image.findAll({
                 where: { product_id: req.params.id }
@@ -269,7 +270,7 @@ exports.updateProductById = async (request, response) => {
 
     try {
         logger.info("Put request for product: v1/product/:id");
-
+        client.increment('put.product.update');
         const id = request.params.id;
 
         //validation
@@ -405,7 +406,7 @@ exports.patchProductById = async (request, response) => {
 
     try {
         logger.info("Patch request for product: v1/product/:id");
-
+        client.increment('patch.product.update');
         const id = request.params.id;
 
         //validation
