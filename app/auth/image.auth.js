@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt");
 const product = require("../models/product.js");
 const Product = productModel;
 const User = userModel;
-
+const logger = require("../utils/logger.js");
 //image
 const image= require("../models/image.js");
 const Image = imageModel;
@@ -23,17 +23,20 @@ const imageAuth = async (req, res, next) => {
             if(imageVal)
             {
                 if (imageVal.product_id != req.params.id) {
+                    logger.error("Forbidden access!");
                     return res.status(403).json({
                         message: 'Forbidden request'
                     })
                 }
             }
         }else{
+            logger.error("Id not in proper format");
             return res.status(400).json({
                 message: 'Please enter the id in number/integer format in the url'
             })
         }
     }catch (err) {
+        logger.error("Id not in proper format");
         return res.status(400).json({
             message: 'Please enter the id in number/integer format in the url'
         })

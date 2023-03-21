@@ -156,3 +156,22 @@ Above, I am passing a variables file inorder to make some parameters dynamic bas
 7. Tested the application on the deployed ec2 server using the RDS and S3.
 8. Also, wrote user data script inorder to setup the ec2 server.
 9. Used packer for building the AMI by making some changes in the previous packer file.
+
+
+# Assignment 7
+
+## The assignment was to install Cloudwatch Agent in our AMI that is we have to make changes to our Packer file and run some commands to install the cloud watch agent.
+
+## Need to attach IAM policy for our cloudwatch agent to access the cloudwatch and push logs and custom metrics to the AWS CloudWatch.
+
+## Need to make changes in Terraform to attach the policy to the role attached to the EC2 instance.
+
+## Steps followed for the assignment 7 were as follows:
+1. Made changes to the Packer file by adding script to install cloudwatch agent 
+2. Created a json file to configure the cloudwatch as this file will be referenced by the cloudwatch agent.
+3. Used statsd to create custom metrics inorder to count the no of rest api calls to each request
+4. Made changes to the user-data script and added script to start the cloudwatch agent.
+5. Deployed the infrastructure and tested the changes in the dev environment.
+6. Checked if the logs and metrics are working as expected.
+
+

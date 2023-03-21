@@ -7,12 +7,10 @@ const cors  = require("cors");
 const logger = require("./app/utils/logger.js");
 const app = express();
 const userRoutes = require('./app/routes/user.routes.js');
-
+const client = require("./app/utils/statsd.js");
 const productRoutes = require('./app/routes/product.routes.js');
 
 const imageRoutes = require('./app/routes/image.routes.js');
-
-
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended:true}));
@@ -32,11 +30,12 @@ app.get("/" ,  (req,res)=>{
 
 app.get("/healthz" , (req,res) =>{
     try{
+        client.increment('get.healthz');
         logger.info("Requested healthz point : /healthz");
         return res.status(200).send();
     }catch(err){
         logger.error("Something went wrong -> healthz point : /healthz");
-        return res.status(400).json(err); 
+        return res.status(400).json(err);
     }
     
 })
