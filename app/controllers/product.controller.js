@@ -33,6 +33,7 @@ exports.createProduct = async (request, response) => {
         if ("name" in request.body) {   
 
             if (request.body.name === "") {
+                logger.error("product name is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep product name field empty!!' }, response, 400);
 
@@ -42,6 +43,7 @@ exports.createProduct = async (request, response) => {
         if ("description" in request.body) {
 
             if (request.body.description === "") {
+                logger.error("description is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep description field empty!!' }, response, 400);
 
@@ -52,6 +54,7 @@ exports.createProduct = async (request, response) => {
         if ("sku" in request.body) {
 
             if (request.body.sku === "") {
+                logger.error("sku is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep sku field empty!!' }, response, 400);
 
@@ -62,6 +65,7 @@ exports.createProduct = async (request, response) => {
         if ("manufacturer" in request.body) {
 
             if (request.body.manufacturer === "") {
+                logger.error("manufacturer is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep manufacturer field empty!!' }, response, 400);
 
@@ -72,6 +76,7 @@ exports.createProduct = async (request, response) => {
         if ("quantity" in request.body) {
 
             if (request.body.quantity === "") {
+                logger.error("quantity is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep quantity field empty!!' }, response, 400);
 
@@ -81,7 +86,7 @@ exports.createProduct = async (request, response) => {
 
         if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
             || request.body.date_added) {
-
+                logger.error("request body is invalid");
             return setErrorResponse(
                 {
                     message: "Request should not contain any one of the following : id, owner_user_id, date_added and date_last_updated",
@@ -96,6 +101,7 @@ exports.createProduct = async (request, response) => {
 
         if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
             Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
+                logger.error("request body is invalid");
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
@@ -103,6 +109,7 @@ exports.createProduct = async (request, response) => {
 
         if (request.body.quantity) {
             if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
+                logger.error("quantity is invalid");
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
@@ -112,6 +119,7 @@ exports.createProduct = async (request, response) => {
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
+            logger.error("quantity is invalid");
             return setErrorResponse(
                 { message: 'You must enter the quantity between 0 and 100' }, response, 400);
         }
@@ -119,7 +127,7 @@ exports.createProduct = async (request, response) => {
 
 
         if (!request.body.name || !request.body.description || !request.body.sku || !request.body.manufacturer || request.body.quantity == undefined) {
-
+            logger.error("required fields are not present");
             return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
 
         }
@@ -192,6 +200,7 @@ exports.getProductById = async (req, res) => {
             })
 
             if (!productVal) {
+                logger.error("product id not found");
                 return res.status(404).json({
                     message: 'Product not found! Please try with a different product id'
                 })
@@ -221,11 +230,6 @@ exports.getProductById = async (req, res) => {
 exports.deleteById = async (req, res) => {
 
     try {
-
-        //new code start for image
-        // const productObject = await Product.findOne({
-        //     where: { id: req.params.id }
-        // })
         logger.info("Delete request for product: v1/product/:id");
         client.increment('delete.product.id');
         if (req.product) {
@@ -277,6 +281,7 @@ exports.updateProductById = async (request, response) => {
         if ("name" in request.body) {
 
             if (request.body.name === "") {
+                logger.error("product name is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep product name field empty!!' }, response, 400);
             }
@@ -284,6 +289,7 @@ exports.updateProductById = async (request, response) => {
 
         if ("description" in request.body) {
             if (request.body.description === "") {
+                logger.error("description is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep description field empty!!' }, response, 400);
             }
@@ -291,6 +297,7 @@ exports.updateProductById = async (request, response) => {
 
         if ("sku" in request.body) {
             if (request.body.sku === "") {
+                logger.error("sku is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep sku field empty!!' }, response, 400);
             }
@@ -298,6 +305,7 @@ exports.updateProductById = async (request, response) => {
 
         if ("manufacturer" in request.body) {
             if (request.body.manufacturer === "") {
+                logger.error("manufacturer is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep manufacturer field empty!!' }, response, 400);
             }
@@ -305,6 +313,7 @@ exports.updateProductById = async (request, response) => {
 
         if ("quantity" in request.body) {
             if (request.body.quantity === "") {
+                logger.error("quantity is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep quantity field empty!!' }, response, 400);
 
@@ -315,12 +324,14 @@ exports.updateProductById = async (request, response) => {
         if (!request.body.name || !request.body.description || !request.body.sku ||
             !request.body.manufacturer || request.body.quantity == undefined
         ) {
+            logger.error("required fileds are not present for product");
             return setErrorResponse({ message: 'name, description, sku, manufacturer and quantity are required fields' }, response, 400)
         }
 
         //rishab
         if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
             Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
+                logger.error("request body for product is invalid");
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
@@ -329,6 +340,7 @@ exports.updateProductById = async (request, response) => {
 
         if (request.body.quantity) {
             if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
+                logger.error("quantity is invalid");
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
@@ -338,6 +350,7 @@ exports.updateProductById = async (request, response) => {
 
         //quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
+            logger.error("quantity is invalid");
             return setErrorResponse(
                 { message: 'You must enter the quantity between 0 and 100' }, response, 400);
         }
@@ -351,6 +364,7 @@ exports.updateProductById = async (request, response) => {
 
         if (getProduct != null) {
             if (getProduct.id != request.params.id) {
+                logger.error("sku is already present");
                 return setErrorResponse({ message: 'Product with same sku already exist. Please enter a different id' }, response, 400)
             }
         }
@@ -359,7 +373,7 @@ exports.updateProductById = async (request, response) => {
 
         if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
             || request.body.date_added) {
-
+                logger.error("request body for product is invalid");
             return setErrorResponse(
                 {
                     message: "Request should not contain any one of the following : id, owner_user_id, date_added and date_last_updated",
@@ -412,6 +426,7 @@ exports.patchProductById = async (request, response) => {
         //validation
         if ("name" in request.body) {
             if (request.body.name === "") {
+                logger.error("product name is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep product name field empty!!' }, response, 400);
             }
@@ -419,6 +434,7 @@ exports.patchProductById = async (request, response) => {
 
         if ("description" in request.body) {
             if (request.body.description === "") {
+                logger.error("description is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep description field empty!!' }, response, 400);
             }
@@ -426,6 +442,7 @@ exports.patchProductById = async (request, response) => {
 
         if ("sku" in request.body) {
             if (request.body.sku === "") {
+                logger.error("sku is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep sku field empty!!' }, response, 400);
             }
@@ -433,14 +450,15 @@ exports.patchProductById = async (request, response) => {
 
         if ("manufacturer" in request.body) {
             if (request.body.manufacturer === "") {
+                logger.error("manufacturer is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep manufacturer field empty!!' }, response, 400);
             }
         }
 
         if ("quantity" in request.body) {
-
             if (request.body.quantity === "") {
+                logger.error("quantity is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep quantity field empty!!' }, response, 400);
 
@@ -452,7 +470,7 @@ exports.patchProductById = async (request, response) => {
 
         if (request.body.id || request.body.owner_user_id || request.body.date_last_updated
             || request.body.date_added) {
-
+                logger.error("request body for product is invalid");
             return setErrorResponse(
                 {
                     message: "You cannot add id,owner_user_id, date_added and date_last_updated as fields!! Only fields : name, description, manufacturer, sku and quantity can be updated",
@@ -467,6 +485,7 @@ exports.patchProductById = async (request, response) => {
 
         if (request.body.name === null || request.body.manufacturer === null || request.body.description === null
             || request.body.sku === null || request.body.quantity === null) {
+                logger.error("request body for product is invalid");
             return setErrorResponse(
                 { message: 'You cannot enter null for these fields : name, description, sku, quantity and manufacturer' }, response, 400);
         }
@@ -474,6 +493,7 @@ exports.patchProductById = async (request, response) => {
 
         if (Number.isInteger(request.body.name) || Number.isInteger(request.body.description) ||
             Number.isInteger(request.body.sku) || Number.isInteger(request.body.manufacturer)) {
+                logger.error("request body for product is invalid");
             return setErrorResponse(
                 { message: 'You must enter name, description, sku, and manufacturer in string format' }, response, 400);
         }
@@ -483,6 +503,7 @@ exports.patchProductById = async (request, response) => {
 
         if (request.body.quantity) {
             if (typeof (request.body.quantity) == 'string' || !Number.isInteger(request.body.quantity)) {
+                logger.error("quantity is invalid");
                 return setErrorResponse(
                     { message: 'You must enter the quantity of type number' }, response, 400);
             }
@@ -492,6 +513,7 @@ exports.patchProductById = async (request, response) => {
 
         // quantity's validation for range
         if (request.body.quantity < 0 || request.body.quantity > 100) {
+            logger.error("quantity is invalid");
             return setErrorResponse(
                 { message: 'You must enter the quantity between 0 and 100' }, response, 400);
         }
@@ -506,6 +528,7 @@ exports.patchProductById = async (request, response) => {
 
             if (getProduct != null) {
                 if (getProduct.id != request.params.id) {
+                    logger.error("sku already request for product");
                     return setErrorResponse({ message: 'Product with same sku already exist. Please enter a different id' }, response, 400)
                 }
             }

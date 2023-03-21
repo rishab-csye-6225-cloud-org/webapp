@@ -59,6 +59,7 @@ exports.uploadImage = async (request, response) => {
         console.log(result);
 
         if (result) {
+            logger.info("image uploaded to s3 bucket success!");
             const image = Image.build({
                 s3_bucket_path: result.Key,
                 product_id: request.params.id,
@@ -103,7 +104,7 @@ exports.deleteImageById = async (request, response) => {
         });
 
         if (!image) {
-
+            logger.error("image not found");
             return response.status(404).json({
                 message: 'Image not found! Please try with a different image id'
             })
@@ -114,6 +115,7 @@ exports.deleteImageById = async (request, response) => {
             const result = await s3.deleteFile(image.s3_bucket_path);
 
             if (result) {
+                logger.info("image deleted from s3 bucket successfully!");
                 const imageValue = await Image.destroy({
                     where: { image_id: id }
                 });
@@ -142,6 +144,7 @@ exports.getImageById = async (request, response) => {
             })
 
             if (!imageVal) {
+                logger.error("image not found");
                 return response.status(404).json({
                     message: 'Image not found! Please try with a different image id'
                 })

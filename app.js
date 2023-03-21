@@ -11,8 +11,6 @@ const client = require("./app/utils/statsd.js");
 const productRoutes = require('./app/routes/product.routes.js');
 
 const imageRoutes = require('./app/routes/image.routes.js');
-
-
 app.use(bodyParser.json());
 
 app.use(bodyParser.urlencoded({extended:true}));

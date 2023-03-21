@@ -1,6 +1,7 @@
 //logging 
 const winston = require('winston');
 const { createLogger, format, transports } = require('winston');
+var appRoot = require('app-root-path');
 const logger = winston.createLogger({
     level: 'info',
    // format: winston.format.json(), 
@@ -18,7 +19,7 @@ const logger = winston.createLogger({
   ),
     transports: [
         new winston.transports.File({
-            filename: "logs/csye6225.log",
+            filename: appRoot + "/logs/csye6225.log",
           }),
           new winston.transports.Console()
         ],

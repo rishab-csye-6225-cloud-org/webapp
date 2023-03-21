@@ -137,6 +137,7 @@ exports.create = async (request, response) => {
             const hashedPassword = await bcrypt.hash(request.body.password, salt)
 
             // this saves the user instance just in the memory but not db
+            logger.info("user object build success");
             const user = User.build({
                 first_name: request.body.first_name,
                 last_name: request.body.last_name,
@@ -146,6 +147,7 @@ exports.create = async (request, response) => {
             })
 
             // here the save() saves the the user instance in the database
+            logger.info("user saved in the database");
             const userRes = await user.save();
 
             //handeled no password return in response when user is created
@@ -211,6 +213,7 @@ exports.updateById = async (req, res) => {
 
         // req.body is empty
         if (!req.body) {
+            logger.error("request body for user is empty");
             return setErrorResponse(
                 {
                     message: "Request body can't empty",
@@ -220,7 +223,7 @@ exports.updateById = async (req, res) => {
         }
 
         if (req.body.id) {
-
+            logger.error("invalid body for user");
             return setErrorResponse({ message: 'Invalid body ID should not be provided' },
                 res, 400);
         }
@@ -229,6 +232,7 @@ exports.updateById = async (req, res) => {
         if ("username" in req.body) {
 
             if (req.body.username === "") {
+                logger.error("username is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep username field empty!!' }, res, 400);
 
@@ -241,6 +245,7 @@ exports.updateById = async (req, res) => {
         if ("first_name" in req.body) {
 
             if (req.body.first_name === "") {
+                logger.error("first_name is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep first_name field empty!!' }, res, 400);
 
@@ -252,6 +257,7 @@ exports.updateById = async (req, res) => {
         if ("last_name" in req.body) {
 
             if (req.body.last_name === "") {
+                logger.error("last_name is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep last_name field empty!!' }, res, 400);
 
@@ -262,6 +268,7 @@ exports.updateById = async (req, res) => {
         if ("password" in req.body) {
 
             if (req.body.password === "") {
+                logger.error("password is empty");
                 return setErrorResponse(
                     { message: 'You cannot keep password field empty!!' }, res, 400);
 
@@ -272,7 +279,7 @@ exports.updateById = async (req, res) => {
         if (!req.body.username || !req.body.password || !req.body.first_name ||
             !req.body.last_name
         ) {
-
+            logger.error("Required fields are not entered for user");
             return setErrorResponse({ message: 'username, password, first_name, and last_name are required fields' }, res, 400)
 
         }
@@ -280,6 +287,7 @@ exports.updateById = async (req, res) => {
 
         //
         if (req.user.username != req.body.username) {
+            logger.error("Username is wrong");
             return setErrorResponse(
                 {
                     message: "Something wrong with the username entered, Please enter a correct username",
@@ -291,13 +299,14 @@ exports.updateById = async (req, res) => {
 
 
         if ("account_created" in req.body || "account_updated" in req.body) {
+            logger.error("Request body invalid");
             return setErrorResponse(
                 { message: ' Request body cannot contain account_created or account_updated field' }, res, 400);
 
         }
 
         if (req.body.account_created || req.body.account_updated) {
-
+            logger.error("Request body invalid");
             return setErrorResponse(
                 {
                     message: "Request should not contain any one of the following : account_created and account_updated",
@@ -313,6 +322,7 @@ exports.updateById = async (req, res) => {
             !req.body.last_name &&
             !req.body.password && !req.body.username //
         ) {
+            logger.error("Request body invalid");
             return setErrorResponse(
                 {
                     message: "Request body does not include any one of the following : first_name, last_name, password, username",
@@ -323,6 +333,7 @@ exports.updateById = async (req, res) => {
 
         if (req.body.password) {
             if (req.body.password.length < 5 || req.body.password.length > 15) {
+                logger.error("Password length invalid");
                 return setErrorResponse({ message: 'Password length should be between 5 and 15' }, res, 400);
 
             }
@@ -334,6 +345,7 @@ exports.updateById = async (req, res) => {
         // check if id is present in the request body and if it matches the id in the request
         if (req.body.id) {
             if (userObj.id !== req.body.id) {
+                logger.error("User id cannot be updated");
                 return setErrorResponse(
                     { message: "User Id cannot be updated", },
                     res, 400
@@ -343,6 +355,7 @@ exports.updateById = async (req, res) => {
 
         // check if account_created is present in the request body
         if (req.body.account_created) {
+            logger.error("account_created cannot be updated");
             return setErrorResponse(
                 { message: "account_created cannot be updated", },
                 res, 400
@@ -351,6 +364,7 @@ exports.updateById = async (req, res) => {
 
         // check if account_updated is present in the request body
         if (req.body.account_updated) {
+            logger.error("account_updated cannot be updated");
             return setErrorResponse(
                 { message: "account_updated cannot be updated", },
                 res, 400

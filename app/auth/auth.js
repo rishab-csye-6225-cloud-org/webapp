@@ -55,8 +55,9 @@ const Auth = async (req, res, next) => {
 
     // validate if user is trying to access his personal account
     if (req.params.id){
-        logger.error("Forbidden access!");
+        
         if (user.id !== parseInt(req.params.id)) {
+            logger.error("Forbidden access!");  
             return res.status(403).json({
                 message: 'Forbidden Resource!!'
             })
