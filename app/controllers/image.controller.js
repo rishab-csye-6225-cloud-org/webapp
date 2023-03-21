@@ -11,7 +11,7 @@ const fs = require('fs')
 const { promisify } = require('util')
 const client = require("../utils/statsd.js");
 const unlinkAsync = promisify(fs.unlink)
-const client = require("../utils/statsd.js");
+
 
 const setErrorResponse = (error, response, status) => {
     response.status(status);
