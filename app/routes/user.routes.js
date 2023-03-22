@@ -7,11 +7,15 @@ const userController = require("../controllers/user.controller.js");
 
 var router = require("express").Router();
 
+const statsDMiddleware = require("../utils/statsDMiddleware.js");
+
+
+
 router.post("/user", userController.create);
 
-router.get("/user/:id" ,auth, userController.getById);
+router.get("/user/:id" ,statsDMiddleware, auth, userController.getById);
 
-router.put("/user/:id" ,auth, userController.updateById);
+router.put("/user/:id" , statsDMiddleware, auth, userController.updateById);
 
 
 

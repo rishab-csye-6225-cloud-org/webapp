@@ -29,7 +29,9 @@ exports.createProduct = async (request, response) => {
     try {
 
         logger.info("Post request for product: v1/product");
-        client.increment('post.product.create');
+        
+        //client.increment('post.product.create');
+        
         if ("name" in request.body) {   
 
             if (request.body.name === "") {
@@ -231,7 +233,9 @@ exports.deleteById = async (req, res) => {
 
     try {
         logger.info("Delete request for product: v1/product/:id");
-        client.increment('delete.product.id');
+        
+       // client.increment('delete.product.id');
+       
         if (req.product) {
             const imageObjects = await Image.findAll({
                 where: { product_id: req.params.id }
@@ -274,7 +278,7 @@ exports.updateProductById = async (request, response) => {
 
     try {
         logger.info("Put request for product: v1/product/:id");
-        client.increment('put.product.update');
+        //client.increment('put.product.update');
         const id = request.params.id;
 
         //validation
@@ -420,7 +424,7 @@ exports.patchProductById = async (request, response) => {
 
     try {
         logger.info("Patch request for product: v1/product/:id");
-        client.increment('patch.product.update');
+        //client.increment('patch.product.update');
         const id = request.params.id;
 
         //validation

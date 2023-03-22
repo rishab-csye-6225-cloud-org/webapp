@@ -28,7 +28,7 @@ exports.uploadImage = async (request, response) => {
 
     console.log(request.file)
     logger.info("Image file which is to be uploaded : " + request.file);
-    client.increment('post.image.upload');
+   // client.increment('post.image.upload');
     try {
         logger.info("Upload request for image: v1/product/:id/image");
 
@@ -94,7 +94,7 @@ exports.deleteImageById = async (request, response) => {
 
     try {
         logger.info("Delete request for image: v1/product/:id/image/:id");
-        client.increment('delete.image.id');
+        //client.increment('delete.image.id');
         const id = request.params.image_id;
 
         const image = await Image.findOne({
@@ -134,7 +134,7 @@ exports.deleteImageById = async (request, response) => {
 exports.getImageById = async (request, response) => {
     try {
         logger.info("Get request for image: v1/product/:id/image/:id");
-        client.increment('get.image.fetch.id');
+        //client.increment('get.image.fetch.id');
         const id = request.params.image_id;
 
         //404 NOT FOUND IF BAD ID   
@@ -173,7 +173,7 @@ exports.getAllImages = async (request, response) => {
 
     try {
         logger.info("Get request for all images: v1/product/:id/image");
-        client.increment('get.image.fetch.all');
+       // client.increment('get.image.fetch.all');
         const id = request.params.id;
 
         if (parseInt(id)) {

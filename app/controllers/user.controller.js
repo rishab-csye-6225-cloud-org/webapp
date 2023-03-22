@@ -4,15 +4,6 @@ const bcrypt = require("bcrypt")
 const logger = require("../utils/logger.js");
 const User = userModel;
 
-//statsd client import
-// var StatsD = require('node-statsd'),
-//       client = new StatsD({host: 'localhost', port: 8125});
-// var StatsD = require('node-statsd'),
-//       client = new StatsD();
-
-// var Client = require('node-statsd');
-// const client = new Client("localhost", 8125);
-
 const client = require("../utils/statsd.js");
 
 const Product = productModel;
@@ -180,7 +171,8 @@ exports.getById = async (req, res) => {
 
         logger.info("Get request for user: v1/user");
 
-        client.increment('get.user.fetch.id');
+        //client.increment('get.user.fetch.id');
+        
         const id = req.params.id;
         const value = await User.findOne({
             where: { id },
@@ -205,7 +197,8 @@ exports.updateById = async (req, res) => {
 
         logger.info("Put request for user: v1/user/:id");
 
-        client.increment('put.user.update');
+        //client.increment('put.user.update');
+        
         const id = req.params.id;
 
 
