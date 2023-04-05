@@ -172,6 +172,6 @@ Above, I am passing a variables file inorder to make some parameters dynamic bas
 3. Used statsd to create custom metrics inorder to count the no of rest api calls to each request
 4. Made changes to the user-data script and added script to start the cloudwatch agent.
 5. Deployed the infrastructure and tested the changes in the dev environment.
-6. Checked if the logs and metrics are working as expected.
+6. Checked if the logs and metrics are working as expected. 
 
 
