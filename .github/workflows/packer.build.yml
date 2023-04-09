@@ -2,7 +2,7 @@ name: Building Packer AMI
 on:
   workflow_dispatch:
   pull_request:
-    branches: ["main"]
+    branches: ["main"] 
 
 jobs:
 #First Job for checking out the webapp code and testing it 
