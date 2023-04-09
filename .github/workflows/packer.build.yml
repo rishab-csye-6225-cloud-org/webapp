@@ -59,16 +59,16 @@ jobs:
         run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
 
       - name: Step 8 - Run `Updating Launch Template with latest AMI id`
-        id: build
+        id: updating 
         run: | 
           echo "Deploying Packer Build"
           AMI_ID=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
           echo "$AMI_ID"
 
       - name: Step 9 - Run `Configuring the launch template`
-        id: build
+        id: configuring
         run: aws ec2 create-launch-template-version --launch-template-id {{ secrets.LAUNCH_TEMPLATE_ID }} --launch-template-data '{"ImageId":"$AMI_ID"}'
 
       - name: Step 10 - Run `Instance Refresh with latest AMI id`
-        id: build
+        id: refreshing
         run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023"
