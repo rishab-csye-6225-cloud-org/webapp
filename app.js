@@ -40,4 +40,18 @@ app.get("/healthz" , (req,res) =>{
     
 })
 
+//cicd test
+app.get("/cicd" , (req,res) =>{
+    try{
+        client.increment('get.cicd');
+        logger.info("Requested cicd point : /cicd");
+        return res.status(200).send();
+    }catch(err){
+        logger.error("Something went wrong -> cicd point : /cicd");
+        return res.status(400).json(err);
+    }
+    
+})
+
+
 module.exports = app;
