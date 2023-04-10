@@ -62,7 +62,7 @@ jobs:
         id: updating 
         run: | 
           echo "Deploying Packer Build"
-          AMI_ID="ami-0c71751ea2aaa60ef"
+          AMI_ID=ami-0c71751ea2aaa60ef
           echo "$AMI_ID"
 
       - name: Step 9 - Run `Configuring the launch template`
