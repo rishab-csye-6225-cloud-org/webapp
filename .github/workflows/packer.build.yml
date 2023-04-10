@@ -64,17 +64,13 @@ jobs:
           echo "Deploying Packer Build"
           AMI_ID="ami-0c71751ea2aaa60ef"
           echo "$AMI_ID"
-      # - name: Install AWS CLI v2
-      #   run: |
-      #     $ curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
-      #     unzip awscliv2.zip
-      #     sudo ./aws/install
 
       - name: Step 9 - Run `Configuring the launch template`
         id: configuring
         run: |
           aws --version
-          aws ec2 describe-launch-templates 
+          aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling2 --version-description version1 --launch-template-data '{"ImageId":"ami-0c71751ea2aaa60ef","InstanceType":"t2.micro"}'
+          aws ec2 describe-launch-templates
           aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
           
 
