@@ -89,3 +89,32 @@ jobs:
   #       id: refreshing
   #       run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023" 
 
+#Third job for running packer build 
+  autoscaling_refresh:
+    needs: packer_build_ami
+    runs-on: ubuntu-latest
+    name: Auto scaling group launch template & instance refresh
+    
+    steps: 
+    - env:
+        AMI: ${{needs.packer_build_ami.outputs.ami}}
+
+      - name: Step 1 - Checkout code from branch
+        uses: actions/checkout@v2
+
+      - name: Step 2 - Zip webapp 
+        run: |
+          zip -r webapp.zip ./
+          ls 
+
+      - name: Step 3 - Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Step 8 - Run `Updating Launch Template with latest AMI id`
+        id: updating 
+        run: | 
+          echo "$AMI"
