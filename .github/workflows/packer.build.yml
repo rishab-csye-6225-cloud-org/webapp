@@ -69,25 +69,22 @@ jobs:
 
 
 #Third job for running packer build 
-  autoscaling_refresh:
-    needs: packer_build_ami
-    runs-on: ubuntu-latest
-    name: Auto scaling group launch template & instance refresh
-    steps: 
-      - env:
-          AMI_ID: ${{needs.packer_build_ami.outputs.ami}}
+  # autoscaling_refresh:
+  #   needs: packer_build_ami
+  #   runs-on: ubuntu-latest
+  #   name: Auto scaling group launch template & instance refresh
+  #   steps: 
+  #     - env:
+  #         AMI_ID: ${{needs.packer_build_ami.outputs.ami}}
 
-      - name: Step 1 - Checkout code from branch
-        uses: actions/checkout@v2
-      
-      - name: Step 2 - Run `Configuring the launch template`
-        id: configuring
-        run: |
-          aws --version
-          aws ec2 describe-launch-templates
-          echo "$AMI_ID"
-          aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
+  #     - name: Step 1 - Run `Configuring the launch template`
+  #       id: configuring
+  #       run: |
+  #         aws --version
+  #         aws ec2 describe-launch-templates
+  #         echo "$AMI_ID"
+  #         aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
 
-      - name: Step 3 - Run `Instance Refresh with latest AMI id` 
-        id: refreshing
-        run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023" 
+  #     - name: Step 2 - Run `Instance Refresh with latest AMI id` 
+  #       id: refreshing
+  #       run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023" 
