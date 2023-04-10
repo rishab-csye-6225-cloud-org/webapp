@@ -69,6 +69,7 @@ jobs:
         id: configuring
         run: |
           aws --version
+          echo "$AMI_ID"
           aws ec2 describe-launch-templates
           aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
           
