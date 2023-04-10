@@ -96,7 +96,7 @@ jobs:
     name: Auto scaling group launch template & instance refresh
     
     steps: 
-    - env:
+      - env:
         AMI: ${{needs.packer_build_ami.outputs.ami}}
 
       - name: Step 1 - Checkout code from branch
