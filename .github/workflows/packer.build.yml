@@ -74,13 +74,9 @@ jobs:
         id: configuring
         run: |
           aws --version
+          aws ec2 create-launch-template --launch-template-name my-template-for-auto-scaling --version-description version1 --launch-template-data '{"ImageId":"ami-0c71751ea2aaa60ef","InstanceType":"t2.micro"}'
           aws ec2 describe-launch-templates
-          aws s3 ls
           aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: us-east-2   
           
 
       - name: Step 10 - Run `Instance Refresh with latest AMI id` 
