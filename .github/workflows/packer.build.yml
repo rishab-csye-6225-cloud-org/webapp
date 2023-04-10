@@ -69,7 +69,7 @@ jobs:
         id: configuring
         run: |
           aws --version
-          aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID”}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249 --no-cli-pager
+          aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"$AMI_ID"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249 --no-cli-pager
 
       - name: Step 10 - Run `Instance Refresh with latest AMI id`
         id: refreshing
