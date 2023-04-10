@@ -64,8 +64,8 @@ jobs:
         id: updating 
         run: | 
           echo "Deploying Packer Build"
-          AMI_ID=ami-0c71751ea2aaa60ef
-          echo "$AMI_ID" >> "$GITHUB_OUTPUT"
+          AMI_ID="ami-0c71751ea2aaa60ef"
+          echo "ami=$AMI_ID" >> "$GITHUB_OUTPUT"
 
 
 #Third job for running packer build 
@@ -88,3 +88,4 @@ jobs:
   #     - name: Step 2 - Run `Instance Refresh with latest AMI id` 
   #       id: refreshing
   #       run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023" 
+
