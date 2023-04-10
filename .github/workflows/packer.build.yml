@@ -96,9 +96,6 @@ jobs:
     name: Auto scaling group launch template & instance refresh
     
     steps: 
-      - env:
-        AMI: ${{needs.packer_build_ami.outputs.ami}}
-
       - name: Step 1 - Checkout code from branch
         uses: actions/checkout@v2
 
@@ -117,4 +114,4 @@ jobs:
       - name: Step 8 - Run `Updating Launch Template with latest AMI id`
         id: updating 
         run: | 
-          echo "$AMI"
+          echo ${{needs.packer_build_ami.outputs.ami_id}}
