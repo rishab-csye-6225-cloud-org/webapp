@@ -78,7 +78,7 @@ jobs:
     
     steps: 
       - name: Step 1 - Configure AWS Credentials
-        if: ${{ vars.DEV == "dev' }}
+        if: ${{ vars.DEV == "dev" }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
@@ -86,12 +86,12 @@ jobs:
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Step 1 - Configure AWS Credentials
-        if: ${{ vars.PROD == "prod' }}
+        if: ${{ vars.PROD == "prod" }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
-          aws-region: ${{ vars.AWS_REGION }}    
+          aws-region: ${{ vars.AWS_REGION }}
 
       - name: Step 2 - Run `Configuring the launch template` 
         id: configuring
