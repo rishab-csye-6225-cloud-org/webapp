@@ -52,13 +52,13 @@ jobs:
         id: init
         run: "packer init ./aws.pkr.hcl"
 
-      # - name: Step 6 - Run `packer validate`
-      #   id: validate
-      #   run: "packer validate --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
+      - name: Step 6 - Run `packer validate`
+        id: validate
+        run: "packer validate --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
 
-      # - name: Step 7 - Run `packer build`
-      #   id: build
-      #   run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
+      - name: Step 7 - Run `packer build`
+        id: build
+        run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
 
       - name: Step 8 - Run `Updating Launch Template with latest AMI id`
         id: updating 
@@ -79,8 +79,8 @@ jobs:
       - name: Step 1 - Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ vars.AWS_REGION }}
 
       - name: Step 2 - Run `Configuring the launch template`
@@ -88,8 +88,7 @@ jobs:
         run: |
           aws --version
           aws ec2 describe-launch-templates
-          echo ${{needs.packer_build_ami.outputs.ami_id}}
-          aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"${{needs.packer_build_ami.outputs.ami_id}}"}' --source-version 1 --launch-template-id lt-0d94fbe405b6fc249  --no-cli-pager
+          aws ec2 create-launch-template-version --launch-template-data '{"ImageId":"${{needs.packer_build_ami.outputs.ami_id}}"}' --source-version 1 --launch-template-id ${{ vars.LAUNCH_TEMPLATE_ID }}  --no-cli-pager
 
       - name: Step 3 - Run `Instance Refresh with latest AMI id` 
         id: refreshing
