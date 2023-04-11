@@ -83,7 +83,7 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
           aws-region: ${{ vars.AWS_REGION }}
 
-      - name: Step 2 - Run `Configuring the launch template`
+      - name: Step 2 - Run `Configuring the launch template` 
         id: configuring
         run: |
           aws --version
