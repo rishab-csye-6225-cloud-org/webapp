@@ -52,19 +52,19 @@ jobs:
         id: init
         run: "packer init ./aws.pkr.hcl"
 
-      - name: Step 6 - Run `packer validate`
-        id: validate
-        run: "packer validate --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
+      # - name: Step 6 - Run `packer validate`
+      #   id: validate
+      #   run: "packer validate --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
 
-      - name: Step 7 - Run `packer build`
-        id: build
-        run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
+      # - name: Step 7 - Run `packer build`
+      #   id: build
+      #   run: "packer build --var-file=aws.pkrvars.hcl ./aws.pkr.hcl"
 
       - name: Step 8 - Run `Updating Launch Template with latest AMI id`
         id: updating 
         run: | 
           echo "Deploying Packer Build"
-          AMI_ID=$(jq -r '.builds[-1].artifact_id' manifest.json | cut -d ":" -f2)
+          AMI_ID=ami-0f2aabea0bf0f5722
           echo "$AMI_ID"
           echo "ami=$AMI_ID" >> "$GITHUB_OUTPUT"
 
@@ -78,11 +78,20 @@ jobs:
     
     steps: 
       - name: Step 1 - Configure AWS Credentials
+        if: ${{ vars.DEV == "dev' }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ vars.AWS_REGION }}
+
+      - name: Step 1 - Configure AWS Credentials
+        if: ${{ vars.PROD == "prod' }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY_PROD }}
+          aws-region: ${{ vars.AWS_REGION }}    
 
       - name: Step 2 - Run `Configuring the launch template` 
         id: configuring
