@@ -41,13 +41,13 @@ app.get("/healthz" , (req,res) =>{
 })
 
 //cicd test
-app.get("/cic" , (req,res) =>{
+app.get("/abc" , (req,res) =>{
     try{
-        client.increment('get.cic');
-        logger.info("Requested cicd point : /cic");
+        client.increment('get.abc');
+        logger.info("Requested abc point : /abc");
         return res.status(200).send();
     }catch(err){
-        logger.error("Something went wrong -> cicd point : /cic");
+        logger.error("Something went wrong -> abc point : /abc");
         return res.status(400).json(err);
     }
     

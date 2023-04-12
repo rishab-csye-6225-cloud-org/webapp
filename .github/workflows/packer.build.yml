@@ -77,8 +77,16 @@ jobs:
     name: Auto scaling group launch template & instance refresh
     
     steps: 
-      
+      - name: Step 1 - Configure AWS Credentials for Dev
+        if: ${{ vars.DEPLOY_ENVIRONMENT == 'dev' }}
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ${{ vars.AWS_REGION }}
+
       - name: Step 1 - Configure AWS Credentials for Prod
+        if: ${{ vars.DEPLOY_ENVIRONMENT == 'prod' }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID_PROD }}
