@@ -175,3 +175,16 @@ Above, I am passing a variables file inorder to make some parameters dynamic bas
 6. Checked if the logs and metrics are working as expected. 
 
 
+# Assignment 9
+
+## The assignment was to work on CI/CD pipeline wherein had to update the launch template version to take latest AMI id with latest changes in the code.
+
+## Need to configure the workflow such that after accepting the latest AMI id built through packer need to pass that to the launch template and then make an instance refresh.
+
+## Steps followed for the assignment 9 were as follows:
+1. Made changes to the Packer file by adding post processor that included a file called manifest.json which consisted of all the meta data of the Packer
+2. Made changes in the workflow by adding a command to extact the ami id from the packer build
+3. Added a command to update the launch template with latest Ami id.
+4. Added a command refresh the instances that needs to be updated with the latest AMI id
+5. Made changes to the webapp code by adding a checking API point named "cicd" for testing purpose
+
