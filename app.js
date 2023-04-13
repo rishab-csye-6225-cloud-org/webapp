@@ -35,11 +35,23 @@ app.get("/healthz" , (req,res) =>{
         return res.status(200).send();
     }catch(err){
         logger.error("Something went wrong -> healthz point : /healthz");
-        return res.status(400).json(err);
+        return res.status(400).json(err); 
     }
     
 })
 
+//cicd
+app.get("/cicd" , (req,res) =>{
+    try{
+        client.increment('get.cicd');
+        logger.info("Requested healthz point : /cicd");
+        return res.status(200).send();
+    }catch(err){
+        logger.error("Something went wrong -> healthz point : /healthz");
+        return res.status(400).json(err); 
+    }
+    
+})
 
 
 module.exports = app;

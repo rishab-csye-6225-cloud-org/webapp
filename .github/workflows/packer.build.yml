@@ -1,7 +1,7 @@
 name: Building Packer AMI 
 on:
   workflow_dispatch:
-  push:
+  pull_request:
     branches: ["main"] 
 
 jobs:
