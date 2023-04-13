@@ -1,7 +1,7 @@
 name: Building Packer AMI 
 on:
   workflow_dispatch:
-  pull_request:
+  push:
     branches: ["main"] 
 
 jobs:
@@ -102,4 +102,4 @@ jobs:
 
       - name: Step 3 - Run `Instance Refresh with latest AMI id` 
         id: refreshing
-        run: "aws autoscaling start-instance-refresh --auto-scaling-group-name csye6225-asg-spring2023"
+        run: "aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ vars.AUTO_SCALING_GROUP_NAME }}"  
