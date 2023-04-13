@@ -102,4 +102,4 @@ jobs:
 
       - name: Step 3 - Run `Instance Refresh with latest AMI id` 
         id: refreshing
-        run: "aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ vars.AUTO_SCALING_GROUP_NAME }}"
+        run: "aws autoscaling start-instance-refresh --auto-scaling-group-name ${{ vars.AUTO_SCALING_GROUP_NAME }}" 
