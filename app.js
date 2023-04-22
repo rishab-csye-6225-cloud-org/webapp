@@ -17,7 +17,7 @@ app.use(bodyParser.urlencoded({extended:true}));
 
 app.use("/v1" , productRoutes);
 
-app.use("/v2" , userRoutes);
+app.use("/v2" , userRoutes); 
 
 app.use("/v1" , imageRoutes);
 
